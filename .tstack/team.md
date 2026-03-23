@@ -10,6 +10,7 @@
 | Developer | `developer.agent.md` | Implementation tasks | Writes and modifies code |
 | Tester | `tester.agent.md` | After implementation | Writes tests, runs test suites, reports failures |
 | Security Auditor | `security-auditor.agent.md` | Code review | Scans for vulnerabilities, enforces security invariants |
+| Code Health | `code-health.agent.md` | Refactoring / debt cleanup | Analyzes technical debt, executes safe iterative refactoring |
 | DevOps | `devops.agent.md` | CI/CD / infra tasks | Build pipelines, deployment, environment config |
 | Scribe | `scribe.agent.md` | After decisions made | Documents decisions, updates project docs, maintains blackboard |
 
