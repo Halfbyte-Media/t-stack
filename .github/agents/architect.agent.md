@@ -8,6 +8,7 @@ tools:
   - agent
   - read
   - search
+  - web
 agents:
   - scout
 ---
@@ -87,3 +88,12 @@ When multiple stories or independent features exist, explicitly mark which can b
 - If a requirement is ambiguous, list your assumptions explicitly and flag them for human review.
 - Reference existing code paths when describing where changes should be made.
 - Always consider backward compatibility and migration paths for changes to existing systems.
+
+## Web Search
+
+You have access to the `web` tool. Use it when:
+- **Evaluating technology choices** — compare frameworks, libraries, or approaches with current docs and benchmarks.
+- **Checking API contracts** — verify external API specs, rate limits, or authentication requirements.
+- **Validating design patterns** — confirm a pattern is appropriate for the project's framework version.
+
+Prefer delegating deep research to the **Scout** sub-agent. Use web search yourself only for quick lookups that inform an immediate design decision.
