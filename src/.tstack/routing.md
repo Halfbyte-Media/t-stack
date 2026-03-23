@@ -1,7 +1,8 @@
 # Task Routing & Status
 
-> Tracks the current state of ALL active work across sessions. Updated by the Orchestrator.
+> Tracks the current state of ALL **active** work across sessions. Updated by the Orchestrator.
 > **IMPORTANT:** Read this file fresh before every write — multiple sessions may update concurrently.
+> Completed work is archived to `.tstack/archive.md` by the GitOps agent. This file should only contain in-progress items.
 
 ## Active Sprints
 
@@ -10,6 +11,7 @@
 | | | | | |
 
 > **Status values:** `intake` → `planning` → `approved` → `in-progress` → `in-review` → `complete`
+> Once a sprint reaches `complete`, the GitOps agent archives it and removes it from this file.
 
 ## Active Worktrees
 
@@ -22,9 +24,3 @@
 | ID | Task | Sprint | Assigned To | Status | Worktree |
 |:---|:---|:---|:---|:---|:---|
 | | | | | | |
-
-## Completed Tasks
-
-| ID | Task | Sprint | Completed By | Result |
-|:---|:---|:---|:---|:---|
-| | | | | |

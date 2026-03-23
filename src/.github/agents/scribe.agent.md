@@ -50,7 +50,12 @@ Number decisions sequentially. Never modify or delete existing entries — appen
 
 ### `.tstack/routing.md`
 - Update task statuses when the Orchestrator reports progress.
-- Move completed tasks from active to completed table.
+- Do NOT manage completed task archival — that's the **GitOps** agent's job.
+- Do NOT add completed entries to routing.md — it should only contain active work.
+
+### `.tstack/archive.md`
+- Do NOT write to this file. The **GitOps** agent owns sprint archival.
+- You may read it if you need historical context for documentation, but this should be rare.
 
 ### `.tstack/sprints/SPRINT-XXX/progress.md`
 - Append progress entries as agents complete their work.

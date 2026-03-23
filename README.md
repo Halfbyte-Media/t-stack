@@ -4,11 +4,12 @@ A multi-agent development team framework for VS Code Copilot. Drop it into any p
 
 ## What It Does
 
-T-Stack gives you a team of 8 specialized agents that communicate through a shared blackboard and work in parallel using git worktrees. You talk to one agent — the Orchestrator — and it handles the rest.
+T-Stack gives you a team of 10 specialized agents that communicate through a shared blackboard and work in parallel using git worktrees. You talk to one agent — the Orchestrator — and it handles the rest.
 
 ```
-You → Orchestrator → Architect → Developer + Tester → Security Auditor → Scribe
+You → Orchestrator → Architect → Developer + Tester → Security Auditor → GitOps → Scribe
                    ↘ Scout (research)         ↗ DevOps (CI/CD)
+                                              ↗ Code Health (refactoring)
 ```
 
 ## Quick Start
@@ -27,13 +28,16 @@ your-project/
 │       ├── developer.agent.md
 │       ├── tester.agent.md
 │       ├── security-auditor.agent.md
+│       ├── code-health.agent.md
 │       ├── devops.agent.md
+│       ├── gitops.agent.md
 │       └── scribe.agent.md
 ├── .tstack/             ← shared blackboard (state files)
 │   ├── project.md
 │   ├── team.md
 │   ├── decisions.md
 │   ├── routing.md
+│   ├── archive.md
 │   └── sprints/
 └── .gitignore           ← add: .tstack/worktrees/
 ```
@@ -73,7 +77,9 @@ The Orchestrator will:
 | **Developer** | Implements code per the Architect's plan | Sub-agent | ✅ Yes |
 | **Tester** | Writes and runs tests, reports failures | Sub-agent | ✅ Tests |
 | **Security Auditor** | Reviews code for OWASP Top 10 vulnerabilities | Sub-agent | No |
+| **Code Health** | Analyzes technical debt, executes safe refactoring | Sub-agent | ✅ Refactoring |
 | **DevOps** | CI/CD pipelines, Docker, deployment configs | Sub-agent | ✅ Infra |
+| **GitOps** | Branch management, PRs, sprint archival, `gh` CLI | Sub-agent | No |
 | **Scribe** | Logs decisions, updates docs, maintains blackboard | Sub-agent | No |
 
 ## Workflow
@@ -89,7 +95,7 @@ INTAKE → PLANNING → REFINEMENT → IMPLEMENTATION → REVIEW → COMPLETE
 3. **Refinement** — Plan presented to you for approval, adjustment, or rejection
 4. **Implementation** — Developer + Tester work (parallel if using worktrees)
 5. **Review** — Security Auditor + Tester review in parallel
-6. **Complete** — Scribe logs decisions, worktrees merged, cleanup
+6. **Complete** — GitOps merges branches and archives the sprint, Scribe logs decisions
 
 You approve before implementation starts. You review before code merges. The agents handle everything in between.
 
@@ -132,7 +138,8 @@ Each session:
 | `team.md` | Team config and routing policy | Rarely changes |
 | `decisions.md` | Architectural decision log | **Append-only** — never edit/delete |
 | `routing.md` | Active sprints, tasks, worktrees | Read-before-write (concurrency safe) |
-| `sprints/` | Per-sprint plans, progress, reviews | Ephemeral — archive after completion |
+| `archive.md` | Completed sprint summaries | Append-only — written by GitOps, read rarely |
+| `sprints/` | Per-sprint plans, progress, reviews | Ephemeral — archived by GitOps after completion |
 
 When a new session starts, agents read the blackboard to rehydrate context. No history is lost between sessions.
 
@@ -151,6 +158,7 @@ Run the Scout after changing your project setup — it refreshes the profile tha
 
 - VS Code with GitHub Copilot (v1.109+)
 - Git (for worktree support)
+- GitHub CLI (`gh`) — for PR/issue operations via the GitOps agent
 
 ## License
 

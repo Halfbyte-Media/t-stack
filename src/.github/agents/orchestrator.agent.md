@@ -15,6 +15,7 @@ agents:
   - code-health
   - devops
   - scribe
+  - gitops
 ---
 
 # Orchestrator — T-Stack Team Lead
@@ -125,9 +126,14 @@ When the human describes a feature or story:
 6. Update sprint status to `in-review`.
 
 ### Phase 6: COMPLETE
-1. On human approval, merge worktree branches (if used) and clean up.
+1. On human approval, delegate to **GitOps** to:
+   - Merge worktree branches (if used) and handle any merge conflicts.
+   - Archive the sprint (write summary to `.tstack/archive.md`, clean `routing.md`, delete sprint directory).
+   - Clean up worktrees and branches.
 2. Have the **Scribe** log decisions and update docs.
-3. Update sprint status to `complete` in routing.md.
+3. Verify `routing.md` only contains active work after cleanup.
+
+**Archive policy:** Completed work goes to `.tstack/archive.md`. Agents do NOT read the archive unless specifically looking up historical context. This keeps `routing.md` and the active blackboard files lean.
 4. Move tasks to the Completed table.
 
 ## Multi-Session Awareness
@@ -160,6 +166,9 @@ Choose agents based on task type. You may invoke multiple agents in parallel for
 | Refactoring / tech debt | Code Health (analyze) → Architect (plan) → Code Health (execute) → Tester (verify) |
 | Codebase health audit | Scout + Code Health (parallel) |
 | CI/CD / deployment | DevOps |
+| GitHub operations (PRs, issues) | GitOps |
+| Sprint cleanup / archival | GitOps |
+| Branch / worktree management | GitOps |
 | Documentation | Scribe |
 | Full feature lifecycle | Scout → Architect → Developer + Tester → Security Auditor → Scribe |
 
