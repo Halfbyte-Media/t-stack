@@ -32,13 +32,12 @@ your-project/
 │       ├── devops.agent.md
 │       ├── gitops.agent.md
 │       └── scribe.agent.md
-├── .tstack/             ← shared blackboard (state files)
-│   ├── project.md
+├── .tstack/             ← shared blackboard (state created by agents)
+│   ├── .version
+│   ├── README.md
 │   ├── team.md
-│   ├── decisions.md
-│   ├── routing.md
-│   ├── archive.md
 │   └── sprints/
+│       └── README.md
 └── .gitignore           ← add: .tstack/worktrees/
 ```
 
@@ -66,6 +65,18 @@ The Orchestrator will:
 3. **Present the plan** — summary for your approval
 4. **Implement** — delegates to Developer, Tester, Security Auditor
 5. **Report** — synthesizes all results for your review
+
+### Updating
+
+To update T-Stack to a new version:
+
+1. Download the new release.
+2. Copy the contents of `src/` into your project root, overwriting existing files.
+3. Done. Your state files (`project.md`, `decisions.md`, `routing.md`, `archive.md`) are safe — they aren't in the distribution.
+
+If you customized `.tstack/team.md`, move your changes to `.tstack/team.local.md` before updating — local overrides survive updates.
+
+> **Note:** Do not use mirror/sync-delete tools (`robocopy /MIR`, `rsync --delete`) to update. Use a normal file copy.
 
 ## The Team
 
