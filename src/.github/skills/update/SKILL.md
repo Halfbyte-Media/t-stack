@@ -40,11 +40,10 @@ Parse both version strings as semver (`Major.Minor.Patch`).
 
 ### Step 3: Validate Agent Files
 
-Read all `.github/agents/*.agent.md` files. For each file:
+For each `.github/agents/*.agent.md` file, read **line 2** (the `version:` property is always the first frontmatter field):
 
-1. Parse the YAML frontmatter.
-2. Check for a `version:` field.
-3. Compare against `.tstack/.version`.
+1. Verify line 2 contains a `version:` field.
+2. Compare against `.tstack/.version`.
 
 **If any agent's `version:` does not match `.tstack/.version`:** Warn: "Agent `<name>` has version `<agent_version>` but `.tstack/.version` is `<framework_version>`. Some agent files may not have been updated. This could cause issues — consider re-copying all agent files from the distribution."
 

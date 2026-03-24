@@ -31,11 +31,10 @@ Read `.tstack/.version`.
 
 ### Step 3: Validate Agent Files
 
-Read all `.github/agents/*.agent.md` files. For each file:
+For each `.github/agents/*.agent.md` file, read **line 2** (the `version:` property is always the first frontmatter field):
 
-1. Parse the YAML frontmatter.
-2. Check for a `version:` field.
-3. Compare the `version:` value against `.tstack/.version`.
+1. Verify line 2 contains a `version:` field.
+2. Compare the `version:` value against `.tstack/.version`.
 
 **If any agent file is missing `version:`:** Warn: "Agent `<name>` does not have a `version:` field in its frontmatter. This may indicate an older or incomplete T-Stack distribution."
 

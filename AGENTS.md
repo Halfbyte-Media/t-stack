@@ -25,6 +25,19 @@ Both contain a single line: the version string (e.g., `0.3.0`).
 
 Bump the version as the **last step** of a sprint that introduces user-facing changes. If a sprint only modifies dogfood-specific files (like this `AGENTS.md`, `.tstack/routing.md`, or sprint plans), no version bump is needed.
 
+### Agent Frontmatter Ordering
+
+The `version` property must always be the **first** property in an agent's YAML frontmatter, above `name`. This ensures version is immediately visible when scanning agent files.
+
+```yaml
+---
+version: "0.3.0"
+name: "Agent Name"
+description: "..."
+...
+---
+```
+
 ## Migration System
 
 ### How It Works
