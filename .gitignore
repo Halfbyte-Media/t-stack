@@ -3,3 +3,6 @@
 
 # T-Stack migration state (local per developer, created by /setup)
 .tstack/.migrated
+
+# Private markdown files
+**/*.md
