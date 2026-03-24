@@ -21,35 +21,44 @@ Copy the two directories into your project root:
 ```
 your-project/
 ├── .github/
-│   └── agents/          ← agent definitions
-│       ├── orchestrator.agent.md
-│       ├── scout.agent.md
-│       ├── architect.agent.md
-│       ├── developer.agent.md
-│       ├── tester.agent.md
-│       ├── security-auditor.agent.md
-│       ├── code-health.agent.md
-│       ├── devops.agent.md
-│       ├── gitops.agent.md
-│       └── scribe.agent.md
+│   ├── agents/          ← agent definitions
+│   │   ├── orchestrator.agent.md
+│   │   ├── scout.agent.md
+│   │   ├── architect.agent.md
+│   │   ├── developer.agent.md
+│   │   ├── tester.agent.md
+│   │   ├── security-auditor.agent.md
+│   │   ├── code-health.agent.md
+│   │   ├── devops.agent.md
+│   │   ├── gitops.agent.md
+│   │   └── scribe.agent.md
+│   └── skills/          ← workflow skills
+│       ├── setup/
+│       │   └── SKILL.md
+│       └── update/
+│           └── SKILL.md
 ├── .tstack/             ← shared blackboard (state created by agents)
 │   ├── .version
 │   ├── README.md
 │   ├── team.md
+│   ├── migrations/
+│   │   ├── 0.2.0/migration.md
+│   │   ├── 0.3.0/migration.md
+│   │   └── 0.4.0/migration.md
 │   └── sprints/
 │       └── README.md
-└── .gitignore           ← add: .tstack/worktrees/
+└── .gitignore           ← add: .tstack/worktrees/ and .tstack/.migrated
 ```
 
 ### 2. Initialize
 
-Open VS Code Copilot Chat and invoke the Scout:
+Open VS Code Copilot Chat and run:
 
 ```
-@scout Scan this project and build the profile.
+/setup
 ```
 
-The Scout reads your codebase — languages, frameworks, conventions, build tools — and writes everything to `.tstack/project.md`. Every other agent reads this file before doing anything.
+The `/setup` skill validates your installation (checks all agent files are present and version-consistent), creates the `.tstack/.migrated` tracking file, and invokes the Scout to scan your codebase. The Scout writes your project profile to `.tstack/project.md`, which every other agent reads before doing anything.
 
 ### 3. Use
 
@@ -72,11 +81,17 @@ To update T-Stack to a new version:
 
 1. Download the new release.
 2. Copy the contents of `src/` into your project root, overwriting existing files.
-3. Done. Your state files (`project.md`, `decisions.md`, `routing.md`, `sprint-index.md`) are safe — they aren't in the distribution.
+3. Run `/update` in Copilot Chat to apply any migrations.
+
+`/update` runs sequential migrations from your current version to the new one and bumps the `.migrated` tracker. Your state files (`project.md`, `decisions.md`, `routing.md`, `sprint-index.md`) are safe — they aren't in the distribution.
 
 If you customized `.tstack/team.md`, move your changes to `.tstack/team.local.md` before updating — local overrides survive updates.
 
 > **Note:** Do not use mirror/sync-delete tools (`robocopy /MIR`, `rsync --delete`) to update. Use a normal file copy.
+
+### Version Tracking
+
+`.tstack/.version` tracks the installed framework version. `.tstack/.migrated` tracks which version has been set up or migrated to. The Orchestrator checks both on every session start — if `.migrated` is missing it tells you to run `/setup`, and if it's behind `.version` it tells you to run `/update`.
 
 ## The Team
 
@@ -150,6 +165,8 @@ Each session:
 | `decisions.md` | Architectural decision log | **Append-only** — never edit/delete |
 | `routing.md` | Active sprints, tasks, worktrees | Read-before-write (concurrency safe) |
 | `sprint-index.md` | Lightweight index of completed sprints | Written by GitOps, read rarely |
+| `.version` | Framework version tracker | Updated on install, read by Orchestrator |
+| `migrations/` | Version migration instructions | Agent-executable, read by `/update` |
 | `sprints/` | Per-sprint plans, progress, reviews | Permanent — completed sprints contain `DONE.md` |
 
 When a new session starts, agents read the blackboard to rehydrate context. No history is lost between sessions.
@@ -164,6 +181,9 @@ Edit `.tstack/team.md` to adjust which agents auto-engage for which task types.
 
 ### Project-specific conventions
 Run the Scout after changing your project setup — it refreshes the profile that all other agents follow.
+
+### Skills
+`/setup` and `/update` are skills defined in `.github/skills/`. You can customize them or add your own.
 
 ## Requirements
 
