@@ -17,6 +17,7 @@ agents:
   - DevOps
   - Scribe
   - GitOps
+  - Ask
 version: "0.3.0"
 argument-hint: "Describe the feature, bug, or task you want the team to work on."
 ---
