@@ -87,3 +87,29 @@
 **Context:** Scout was originally user-invocable so users could run `@scout Scan this project`. With the `/setup` skill now handling initialization (which invokes Scout internally), direct user access to Scout is redundant.  
 **Decision:** Set Scout to `user-invocable: false`. Users interact through the Orchestrator or `/setup` skill only.  
 **Rationale:** Single entry point design. Reduces user confusion about which agent to invoke. Scout remains available as a sub-agent for Orchestrator delegation.
+
+---
+
+### [ADR-010] Skill extraction for Orchestrator context reduction
+**Date:** 2026-03-24
+**Status:** Accepted
+**Context:** The Orchestrator's ~330-line definition inflates base context on every interaction. Most procedural sections (pre-flight, sprint phases 2-6, worktree management, blackboard init) are only needed situationally.
+**Decision:** Extract 4 sections into non-user-invocable skills loaded on demand. Pre-flight uses subagent execution (structured PASS/FAIL/WARN return). Sprint-lifecycle, worktree-management, and blackboard-init use on-demand readFile.
+**Rationale:** Reduces Orchestrator base context by ~40% (~130 lines). Skills are loaded only when needed. The subagent pattern for pre-flight keeps procedural token cost out of the Orchestrator's context entirely.
+**Alternatives Considered:**
+- Extract into separate agents — rejected; these are procedures, not roles.
+- Keep inline with comments — rejected; doesn't reduce context size.
+- Extract all 4 as subagent-executed — rejected; reference skills don't produce a return value, they provide instructions the Orchestrator itself follows.
+
+---
+
+### [ADR-011] Senior Engineer agent for engineering quality review
+**Date:** 2026-03-24
+**Status:** Accepted
+**Context:** The Developer agent had no engineering quality feedback loop before formal review (Security Auditor + Tester). Code style, naming, patterns, and maintainability issues were only caught late or not at all.
+**Decision:** Add a Senior Engineer agent operating in Phase 4.5 (between Implementation and Formal Review). Constructive mentor tone, structured review format (APPROVE/REQUEST_CHANGES/COMMENT with MUST-FIX/SHOULD-FIX/CONSIDER severities), max 1 dispute round. Triggered for Medium+ complexity only. Also supports Developer-initiated consultation during Phase 4.
+**Rationale:** Multi-agent debate research (ChatDev, MetaGPT, CrewAI patterns) shows that a constructive review pass improves final code quality while keeping the adversarial formal review (Phase 5) focused on security and correctness. Separate agent avoids scope creep in Developer or Security Auditor roles. Context isolation via subagent execution keeps review reasoning out of other agents' context windows.
+**Alternatives Considered:**
+- Expand Developer with self-review — rejected; same agent can't objectively review its own work.
+- Add review to Security Auditor — rejected; conflates security review with engineering quality, bloats one agent.
+- External library/framework — rejected; no libraries needed for Markdown-based agent coordination.

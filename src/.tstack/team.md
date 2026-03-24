@@ -16,6 +16,7 @@
 | Developer | `developer.agent.md` | Implementation tasks | Writes and modifies code |
 | Tester | `tester.agent.md` | After implementation | Writes tests, runs test suites, reports failures |
 | Security Auditor | `security-auditor.agent.md` | Code review | Scans for vulnerabilities, enforces security invariants |
+| Senior Engineer | `senior-engineer.agent.md` | Engineering review (Medium+) | Reviews code for engineering quality, patterns, naming, maintainability |
 | Code Health | `code-health.agent.md` | Refactoring / debt cleanup | Analyzes technical debt, executes safe iterative refactoring |
 | DevOps | `devops.agent.md` | CI/CD / infra tasks | Build pipelines, deployment, environment config |
 | GitOps | `gitops.agent.md` | Sprint completion / git tasks | Branch management, worktree lifecycle, archival, `gh` CLI ops |

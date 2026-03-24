@@ -38,6 +38,16 @@ description: "..."
 ---
 ```
 
+### Orchestrator Pre-flight Version String
+
+The Orchestrator's Pre-flight Check section contains a hardcoded `agent-version` string passed to the `pre-flight` skill:
+
+```
+The agent-version is: `0.5.0`
+```
+
+This string **must be updated** alongside the agent frontmatter `version:` fields during every version bump. It is not auto-derived — missing this causes a false WARN from the pre-flight check.
+
 ## Migration System
 
 ### How It Works
