@@ -9,6 +9,7 @@ tools:
   - search
   - execute
   - web
+version: "0.3.0"
 ---
 
 # Security Auditor — Security Review Agent

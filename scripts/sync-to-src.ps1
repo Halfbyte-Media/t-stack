@@ -15,6 +15,8 @@ $frameworkFiles = @(
     @{ Src = ".tstack/team.md"; Dst = "src/.tstack/team.md"; IsDir = $false }
     @{ Src = ".tstack/sprints/README.md"; Dst = "src/.tstack/sprints/README.md"; IsDir = $false }
     @{ Src = ".gitignore"; Dst = "src/.gitignore"; IsDir = $false }
+    @{ Src = ".github/skills"; Dst = "src/.github/skills"; IsDir = $true }
+    @{ Src = "migrations"; Dst = "src/migrations"; IsDir = $true }
 )
 
 # State files that must NEVER exist in src/.tstack/
@@ -23,6 +25,7 @@ $stateFiles = @(
     "src/.tstack/decisions.md"
     "src/.tstack/routing.md"
     "src/.tstack/sprint-index.md"
+    "src/.tstack/.migrated"
 )
 
 $root = Split-Path -Parent $PSScriptRoot

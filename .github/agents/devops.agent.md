@@ -10,6 +10,7 @@ tools:
   - search
   - execute
   - web
+version: "0.3.0"
 ---
 
 # DevOps — Infrastructure & Automation Agent

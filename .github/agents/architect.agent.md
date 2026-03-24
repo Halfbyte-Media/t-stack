@@ -11,6 +11,7 @@ tools:
   - web
 agents:
   - scout
+version: "0.3.0"
 ---
 
 # Architect — System Design & Planning Agent

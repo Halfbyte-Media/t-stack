@@ -1,7 +1,7 @@
 ---
 name: "scout"
 description: "Project scanner and research agent. Analyzes codebases, discovers project structure, identifies languages/frameworks, and populates the T-Stack project profile."
-user-invocable: true
+user-invocable: false
 disable-model-invocation: false
 tools: 
   - vscode
@@ -9,6 +9,7 @@ tools:
   - read
   - search
   - web
+version: "0.3.0"
 ---
 
 # Scout — Project Intelligence Agent
@@ -62,7 +63,7 @@ When asked to profile a project, execute this sequence:
 
 After scanning, update `.tstack/project.md` with all discovered information. Fill in every section. If a section doesn't apply, mark it as "N/A" rather than leaving it blank.
 
-**State file initialization:** If `.tstack/project.md` does not exist, create it when writing scan results. Use the standard template with all sections (Overview, Structure, Key Files, Conventions, Dependencies, Notes).
+**Output target:** Write scan results to `.tstack/project.md`. If the file does not exist, create it using the standard template with all sections (Overview, Structure, Key Files, Conventions, Dependencies, Notes).
 
 ## Research Mode
 

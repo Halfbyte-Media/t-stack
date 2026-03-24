@@ -8,6 +8,7 @@ tools:
   - read
   - edit
   - search
+version: "0.3.0"
 ---
 
 # Tester — Quality Assurance Agent

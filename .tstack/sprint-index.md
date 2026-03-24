@@ -5,3 +5,4 @@
 
 | Sprint | Completed | Outcome | Goal |
 |:---|:---|:---|:---|
+| SPRINT-003 | 2026-03-24 | Success | Versioning, setup & update skills |

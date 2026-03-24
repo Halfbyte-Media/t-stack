@@ -8,6 +8,7 @@ tools:
   - read
   - edit
   - search
+version: "0.3.0"
 ---
 
 # Scribe — Documentation & Memory Agent

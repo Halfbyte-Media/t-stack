@@ -9,6 +9,7 @@ tools:
   - edit
   - search
   - execute
+version: "0.3.0"
 ---
 
 # GitOps — Git & Workspace Operations Agent
