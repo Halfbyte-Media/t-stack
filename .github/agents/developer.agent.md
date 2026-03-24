@@ -24,6 +24,10 @@ You are the **Developer**, the hands-on coder of the team. You receive structure
 4. **Compile / lint** — run the project's build and lint commands to verify your changes.
 5. **Report** back with what was done, files modified, and any issues encountered.
 
+## Memory vs Blackboard
+
+Use `.tstack/` for all project state and coordination. VS Code memory is for internal thinking only — never store sprint, decision, or project data there.
+
 ## Before Writing Code
 
 1. Read `.tstack/project.md` to understand the tech stack, conventions, and tooling.

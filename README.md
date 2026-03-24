@@ -72,7 +72,7 @@ To update T-Stack to a new version:
 
 1. Download the new release.
 2. Copy the contents of `src/` into your project root, overwriting existing files.
-3. Done. Your state files (`project.md`, `decisions.md`, `routing.md`, `archive.md`) are safe — they aren't in the distribution.
+3. Done. Your state files (`project.md`, `decisions.md`, `routing.md`, `sprint-index.md`) are safe — they aren't in the distribution.
 
 If you customized `.tstack/team.md`, move your changes to `.tstack/team.local.md` before updating — local overrides survive updates.
 
@@ -149,8 +149,8 @@ Each session:
 | `team.md` | Team config and routing policy | Rarely changes |
 | `decisions.md` | Architectural decision log | **Append-only** — never edit/delete |
 | `routing.md` | Active sprints, tasks, worktrees | Read-before-write (concurrency safe) |
-| `archive.md` | Completed sprint summaries | Append-only — written by GitOps, read rarely |
-| `sprints/` | Per-sprint plans, progress, reviews | Ephemeral — archived by GitOps after completion |
+| `sprint-index.md` | Lightweight index of completed sprints | Written by GitOps, read rarely |
+| `sprints/` | Per-sprint plans, progress, reviews | Permanent — completed sprints contain `DONE.md` |
 
 When a new session starts, agents read the blackboard to rehydrate context. No history is lost between sessions.
 

@@ -22,7 +22,7 @@ $stateFiles = @(
     "src/.tstack/project.md"
     "src/.tstack/decisions.md"
     "src/.tstack/routing.md"
-    "src/.tstack/archive.md"
+    "src/.tstack/sprint-index.md"
 )
 
 $root = Split-Path -Parent $PSScriptRoot

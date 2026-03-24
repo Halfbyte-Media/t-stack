@@ -1,6 +1,6 @@
 # T-Stack Sync: src/ → project root
 # Copies framework files from the distributable template to the active dogfood environment.
-# State files (.tstack/project.md, decisions.md, routing.md, archive.md) are NEVER touched.
+# State files (.tstack/project.md, decisions.md, routing.md, sprint-index.md) are NEVER touched.
 
 param(
     [switch]$DryRun

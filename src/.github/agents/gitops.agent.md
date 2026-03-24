@@ -23,6 +23,10 @@ You are the **GitOps** agent, responsible for all git operations, GitHub CLI int
 4. **GitHub operations** — create PRs, manage issues, check CI status, and other `gh` CLI tasks.
 5. **Housekeeping** — clean up stale worktrees, prune merged branches, and maintain workspace hygiene.
 
+## Memory vs Blackboard
+
+Use `.tstack/` for all project state and coordination. VS Code memory is for internal thinking only — never store sprint, decision, or project data there.
+
 ## GitHub CLI (`gh`) Operations
 
 Use the `gh` CLI for all GitHub interactions. **Do NOT use MCP tools for GitHub** — always prefer `gh`.
@@ -64,54 +68,34 @@ gh release create <tag> --title "title" --notes "notes"
 
 ## Sprint Archival
 
-**State file initialization:** If `.tstack/archive.md` does not exist, create it with this header before appending the first archive entry:
+When the Orchestrator signals a sprint is complete:
 
-```markdown
-# Sprint Archive
+1. **Mark complete** — create `DONE.md` in the sprint directory:
+   ```markdown
+   # Completed: YYYY-MM-DD
+   **Outcome:** Success | Partial | Reverted
+   **Goal:** One-line summary.
+   ```
 
-> Completed sprint summaries. This file is **append-only** and grows over time.  
-> Agents should **NOT** read this file unless specifically asked to look up history.  
-> Current work is tracked in `routing.md` — this is only for reference.
+2. **Update sprint index** — if `.tstack/sprint-index.md` does not exist, create it with:
+   ```markdown
+   # Sprint Index
 
----
-```
+   > Lightweight index of completed sprints. For full details, read the sprint's own directory under `sprints/`.
+   > Agents: read this ONLY when asked to look up history. Current work is in `routing.md`.
 
-When the Orchestrator reports a sprint is complete, perform this archival sequence:
+   | Sprint | Completed | Outcome | Goal |
+   |:---|:---|:---|:---|
+   ```
+   Then append one row for the completed sprint.
 
-### Step 1: Write Archive Entry
-Append a summary to `.tstack/archive.md`:
+3. **Clean routing.md** — remove the sprint from Active Sprints, Task Queue, and Active Worktrees tables.
 
-```markdown
----
+4. **Clean worktree** (if used) — remove the git worktree and delete the local branch.
 
-### SPRINT-XXX: Sprint Title
-**Completed:** YYYY-MM-DD
-**Goal:** What this sprint accomplished (1-2 sentences).
-**Key Decisions:** Brief list of decisions made (details in decisions.md).
-**Files Changed:** List of key files modified.
-**Outcome:** Success / Partial / Reverted
-```
+5. **Verify** — confirm `DONE.md` exists in the sprint directory and the sprint is no longer in `routing.md`.
 
-### Step 2: Clean routing.md
-- Remove the sprint's row from the Active Sprints table.
-- Remove associated entries from the Task Queue.
-- Remove associated worktree entries from Active Worktrees.
-- Do NOT add to a completed table — that's what the archive is for.
-
-### Step 3: Clean Sprint Directory
-- Delete the sprint directory: `.tstack/sprints/SPRINT-XXX-name/`
-- The archive entry + `decisions.md` preserves everything agents need. The raw plan/progress/review files are no longer needed.
-
-### Step 4: Clean Worktree (if used)
-```bash
-git worktree remove .tstack/worktrees/SPRINT-XXX-name
-git branch -d tstack/SPRINT-XXX-name
-```
-
-### Step 5: Verify
-- Confirm `routing.md` only contains active work.
-- Confirm no stale worktrees remain: `git worktree list`
-- Confirm no stale branches remain: `git branch --list "tstack/*"`
+**Important:** Do NOT delete sprint directories. They are the permanent archive.
 
 ## Housekeeping Tasks
 
@@ -193,4 +177,4 @@ git merge tstack/SPRINT-XXX-name
 - Always check for uncommitted changes before removing a worktree.
 - On merge conflicts, STOP and report. Never auto-resolve.
 - Verify `gh auth status` succeeds before running any `gh` commands. If not authenticated, tell the Orchestrator.
-- Keep `routing.md` lean — it should only contain currently active work. Everything else goes to the archive.
+- Keep `routing.md` lean — it should only contain currently active work. Completed sprints are indexed in `sprint-index.md`.

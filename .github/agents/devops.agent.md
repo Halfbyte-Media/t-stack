@@ -24,6 +24,10 @@ You are the **DevOps** agent, responsible for build systems, deployment pipeline
 4. **Manage** environment configuration — env files, secrets management, deployment targets.
 5. **Optimize** build/test/deploy cycle for speed and reliability.
 
+## Memory vs Blackboard
+
+Use `.tstack/` for all project state and coordination. VS Code memory is for internal thinking only — never store sprint, decision, or project data there.
+
 ## Before Making Changes
 
 1. Read `.tstack/project.md` to understand existing build tools and deployment setup.

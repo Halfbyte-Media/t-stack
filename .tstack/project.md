@@ -34,9 +34,9 @@ t-stack/
 │   ├── team.md                  # Team config and routing preferences
 │   ├── decisions.md             # Architectural decision log (append-only)
 │   ├── routing.md               # Active task/sprint tracking
-│   ├── archive.md               # Completed sprint archive
+│   ├── sprint-index.md           # Lightweight index of completed sprints
 │   ├── README.md                # Blackboard structure docs
-│   └── sprints/                 # Per-sprint working directories
+│   └── sprints/                 # Per-sprint working directories (permanent)
 │       └── README.md
 ├── src/                         # DISTRIBUTABLE template — what users copy into their projects
 │   ├── .github/
@@ -60,6 +60,7 @@ t-stack/
 | `.tstack/team.md` | Blackboard — team configuration, routing preferences, worktree policy |
 | `.tstack/decisions.md` | Blackboard — append-only architectural decision log |
 | `.tstack/routing.md` | Blackboard — active sprint/task tracking |
+| `.tstack/sprint-index.md` | Blackboard — lightweight index of completed sprints |
 | `src/` | Distributable payload — users copy `src/.github/` and `src/.tstack/` into their projects |
 
 ## Conventions
@@ -68,7 +69,7 @@ t-stack/
 - **Branching:** `main` (default), `dogfood` (self-development), `feature/<name>` for feature branches, `tstack/SPRINT-XXX-name` for sprint worktree branches
 - **Commit Style:** Conventional-ish — `feat:`, `Add`, descriptive subjects (e.g., `feat: Introduce T-Stack agent framework...`)
 - **Agent file format:** YAML frontmatter (`name`, `description`, `tools`, `agents`, `user-invocable`, `disable-model-invocation`) + Markdown body with role definition, responsibilities, and rules
-- **Blackboard convention:** Files in `.tstack/` are the shared memory substrate; `decisions.md` is append-only; `routing.md` is active-only; `archive.md` is read-rarely
+- **Blackboard convention:** Files in `.tstack/` are the shared memory substrate; `decisions.md` is append-only; `routing.md` is active-only; `sprint-index.md` is read-rarely; sprint directories are permanent (completed sprints contain `DONE.md`)
 
 ## Dependencies
 
