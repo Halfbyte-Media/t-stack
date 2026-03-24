@@ -2,7 +2,7 @@
 version: "0.3.0"
 name: "Scout"
 description: "Project scanner and research agent. Analyzes codebases, discovers project structure, identifies languages/frameworks, and populates the T-Stack project profile."
-user-invocable: false
+user-invocable: true
 disable-model-invocation: false
 tools: 
   - vscode
