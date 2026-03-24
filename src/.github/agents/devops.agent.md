@@ -1,5 +1,5 @@
 ---
-name: "devops"
+name: "DevOps"
 description: "DevOps and infrastructure agent. Manages build pipelines, deployment configurations, CI/CD workflows, Dockerfiles, and environment setup."
 user-invocable: false
 disable-model-invocation: false

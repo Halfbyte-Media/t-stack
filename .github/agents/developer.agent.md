@@ -1,5 +1,5 @@
 ---
-name: "developer"
+name: "Developer"
 description: "Implementation agent. Writes, modifies, and refactors code based on specifications from the Architect. Operates within defined scope and follows project conventions."
 user-invocable: false
 disable-model-invocation: false

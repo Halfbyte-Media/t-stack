@@ -1,5 +1,5 @@
 ---
-name: "gitops"
+name: "GitOps"
 description: "Git operations and workspace housekeeping agent. Manages branches, worktrees, sprint archival, GitHub CLI operations, and keeps the .tstack/ directory lean."
 user-invocable: false
 disable-model-invocation: false

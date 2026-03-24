@@ -1,5 +1,5 @@
 ---
-name: "code-health"
+name: "Code Health"
 description: "Codebase analysis and refactoring agent. Identifies technical debt, code smells, and structural issues. Plans and executes safe, iterative refactoring using established patterns."
 user-invocable: false
 disable-model-invocation: false

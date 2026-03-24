@@ -1,5 +1,5 @@
 ---
-name: "orchestrator"
+name: "Orchestrator"
 description: "Primary coordinator for the T-Stack agent team. Routes tasks to specialized sub-agents, manages sprint lifecycle, synthesizes results, and ensures human oversight."
 user-invocable: true
 disable-model-invocation: false
@@ -8,15 +8,15 @@ tools:
   - agent
   - read/readFile
 agents:
-  - scout
-  - architect
-  - developer
-  - tester
-  - security-auditor
-  - code-health
-  - devops
-  - scribe
-  - gitops
+  - Scout
+  - Architect
+  - Developer
+  - Tester
+  - Security Auditor
+  - Code Health
+  - DevOps
+  - Scribe
+  - GitOps
 version: "0.3.0"
 argument-hint: "Describe the feature, bug, or task you want the team to work on."
 ---

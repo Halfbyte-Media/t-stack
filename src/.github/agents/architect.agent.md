@@ -1,5 +1,5 @@
 ---
-name: "architect"
+name: "Architect"
 description: "System designer and technical planner. Analyzes requirements, produces specifications, decomposes tasks, and defines architecture. Does NOT write implementation code."
 user-invocable: false
 disable-model-invocation: false
@@ -10,7 +10,7 @@ tools:
   - search
   - web
 agents:
-  - scout
+  - Scout
 version: "0.3.0"
 ---
 
