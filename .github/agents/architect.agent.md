@@ -1,4 +1,5 @@
 ---
+version: "0.3.0"
 name: "Architect"
 description: "System designer and technical planner. Analyzes requirements, produces specifications, decomposes tasks, and defines architecture. Does NOT write implementation code."
 user-invocable: false
@@ -11,7 +12,6 @@ tools:
   - web
 agents:
   - Scout
-version: "0.3.0"
 ---
 
 # Architect — System Design & Planning Agent

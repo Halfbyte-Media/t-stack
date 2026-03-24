@@ -1,4 +1,5 @@
 ---
+version: "0.3.0"
 name: "Orchestrator"
 description: "Primary coordinator for the T-Stack agent team. Routes tasks to specialized sub-agents, manages sprint lifecycle, synthesizes results, and ensures human oversight."
 user-invocable: true
@@ -18,7 +19,6 @@ agents:
   - Scribe
   - GitOps
   - Ask
-version: "0.3.0"
 argument-hint: "Describe the feature, bug, or task you want the team to work on."
 ---
 

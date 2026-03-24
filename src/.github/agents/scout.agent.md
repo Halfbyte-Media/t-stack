@@ -1,4 +1,5 @@
 ---
+version: "0.3.0"
 name: "Scout"
 description: "Project scanner and research agent. Analyzes codebases, discovers project structure, identifies languages/frameworks, and populates the T-Stack project profile."
 user-invocable: false
@@ -9,7 +10,6 @@ tools:
   - read
   - search
   - web
-version: "0.3.0"
 ---
 
 # Scout — Project Intelligence Agent
