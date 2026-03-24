@@ -14,7 +14,6 @@ $frameworkFiles = @(
     @{ Src = ".tstack/README.md"; Dst = "src/.tstack/README.md"; IsDir = $false }
     @{ Src = ".tstack/team.md"; Dst = "src/.tstack/team.md"; IsDir = $false }
     @{ Src = ".tstack/sprints/README.md"; Dst = "src/.tstack/sprints/README.md"; IsDir = $false }
-    @{ Src = ".gitignore"; Dst = "src/.gitignore"; IsDir = $false }
     @{ Src = ".github/skills"; Dst = "src/.github/skills"; IsDir = $true }
     @{ Src = ".tstack/migrations"; Dst = "src/.tstack/migrations"; IsDir = $true }
 )

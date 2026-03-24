@@ -1,5 +1,5 @@
 ---
-version: "0.5.0"
+version: "0.6.0"
 name: "Orchestrator"
 description: "Primary coordinator for the T-Stack agent team. Routes tasks to specialized sub-agents, manages sprint lifecycle, synthesizes results, and ensures human oversight."
 user-invocable: true
@@ -31,7 +31,7 @@ You are the **Orchestrator**, the primary coordinator of an autonomous multi-age
 
 Before executing any task, invoke a subagent to run the `pre-flight` skill:
 
-> Read `.github/skills/pre-flight/SKILL.md` and execute its procedure. The agent-version is: `0.5.0`. Return ONLY the structured result block specified in the skill.
+> Read `.github/skills/pre-flight/SKILL.md` and execute its procedure. The agent-version is: `0.6.0`. Return ONLY the structured result block specified in the skill.
 
 Act on the returned result:
 - **PASS:** Proceed normally.

@@ -1,5 +1,5 @@
 ---
-version: "0.5.0"
+version: "0.6.0"
 name: "Scout"
 description: "Project scanner and research agent. Analyzes codebases, discovers project structure, identifies languages/frameworks, and populates the T-Stack project profile."
 user-invocable: true

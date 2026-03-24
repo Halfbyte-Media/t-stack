@@ -113,3 +113,27 @@
 - Expand Developer with self-review — rejected; same agent can't objectively review its own work.
 - Add review to Security Auditor — rejected; conflates security review with engineering quality, bloats one agent.
 - External library/framework — rejected; no libraries needed for Markdown-based agent coordination.
+
+---
+
+### [ADR-012] .gitignore generation at setup time instead of distribution
+**Date:** 2026-03-24
+**Status:** Accepted
+**Context:** T-Stack distributed a `src/.gitignore` that was synced bidirectionally. This file contained a dogfood-only rule (`**/*.md`) that could leak to consumer projects. Maintaining a separate "clean" version for distribution added complexity.
+**Decision:** Remove `src/.gitignore` from the distribution. The `/setup` skill now generates `.gitignore` entries at initialization time — creating the file if missing, appending T-Stack entries (`.tstack/worktrees/`, `.tstack/.migrated`) under a `# T-Stack` header with dedup. Setup also offers project-specific entries based on the Scout profile. Sync scripts no longer sync `.gitignore`.
+**Rationale:** Prevents dogfood-only rules from leaking to consumers. Allows personalization per project. Makes `.gitignore` user-owned after setup (no overwrites on update). Simpler than maintaining two versions of the file.
+**Alternatives Considered:**
+- Maintain a separate clean `src/.gitignore` without the `**/*.md` rule — rejected; adds maintenance burden and still overwrites user customizations on update.
+- Do nothing — rejected; the `**/*.md` rule would eventually cause problems for users who don't notice it ignoring their markdown files.
+
+---
+
+### [ADR-013] Pre-flight auto-creates .migrated for new developers
+**Date:** 2026-03-24
+**Status:** Accepted
+**Context:** `.tstack/.migrated` is gitignored (ADR-005), so new developers cloning an already-initialized project won't have it. The pre-flight check used to FAIL in this case, telling them to run `/setup` — but `/setup` would re-scan and re-initialize unnecessarily since the project is already set up.
+**Decision:** When `.migrated` is missing during pre-flight, check if `.tstack/.version` exists and `agent-version` matches. If everything is consistent, silently create `.migrated` with the current version and continue. Only FAIL if `.version` is also missing or versions don't match.
+**Rationale:** New devs get a seamless onboarding experience — no manual `/setup` needed for an already-initialized project. The version consistency check prevents false positives (e.g., a genuinely uninitialized project won't have matching agent versions).
+**Alternatives Considered:**
+- Keep the FAIL and require `/setup` — rejected; unnecessary friction for new team members on established projects.
+- Commit `.migrated` to the repo — rejected; conflicts with ADR-005 rationale (each developer's migration state is local).

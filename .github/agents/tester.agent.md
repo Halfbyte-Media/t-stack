@@ -1,5 +1,5 @@
 ---
-version: "0.5.0"
+version: "0.6.0"
 name: "Tester"
 description: "Quality assurance agent. Designs test strategies, writes tests, executes test suites, and reports results. Shifts testing left by writing tests from specifications before implementation."
 user-invocable: false

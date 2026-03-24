@@ -54,10 +54,52 @@ Invoke the **Scout** agent to scan the workspace and populate `.tstack/project.m
 
 If the Scout agent is not available as a subagent, instruct the user: "Run `@scout Scan this project and build the profile.` to complete setup."
 
-### Step 6: Report
+### Step 6: Configure .gitignore
+
+Ensure the project's `.gitignore` includes T-Stack entries.
+
+#### 6a: Read or Create .gitignore
+
+Check if `.gitignore` exists in the project root.
+
+- **If it does not exist:** Create it as an empty file.
+- **If it exists:** Read its contents.
+
+#### 6b: Add T-Stack Entries
+
+The required T-Stack entries are:
+
+```
+# T-Stack (managed by /setup — do not remove this block)
+.tstack/worktrees/
+.tstack/.migrated
+```
+
+For each entry (`.tstack/worktrees/` and `.tstack/.migrated`):
+1. Check if the entry already exists anywhere in the file (exact line match, ignoring leading/trailing whitespace).
+2. **If already present:** Skip it.
+3. **If not present:** Mark it for addition.
+
+If any entries need to be added:
+- If the file already contains a `# T-Stack` comment header, append the missing entries immediately after that header block.
+- If no `# T-Stack` header exists, append a blank line followed by the full block (header + all missing entries) to the end of the file.
+
+If all entries already exist, report: "`.gitignore` already contains T-Stack entries — no changes needed."
+
+#### 6c: Offer Project-Specific Entries
+
+Read `.tstack/project.md` (built by Scout in Step 5). Based on the detected languages and frameworks, ask the user:
+
+> "Would you like me to add common gitignore entries for your project based on the detected stack ([list detected languages/frameworks])?"
+
+- **If the user declines (or no project profile available):** Skip — continue to Step 7.
+- **If the user accepts:** Use the Scout's project profile to determine appropriate entries (e.g., `node_modules/` for Node.js, `__pycache__/` for Python, `dist/` / `build/` for common build outputs). Apply the same dedup logic from 6b — skip any entries already present. Append new entries under an appropriate comment header for the framework.
+
+### Step 7: Report
 
 Report to the user:
 - T-Stack version initialized
 - Any warnings from validation
 - Whether the project profile was built
+- Whether `.gitignore` was configured (and what was added, if anything)
 - "You're ready to go — invoke the Orchestrator with your first task, or use `@scout` to scan the project."
