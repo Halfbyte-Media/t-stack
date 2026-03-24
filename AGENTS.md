@@ -42,14 +42,16 @@ description: "..."
 
 ### How It Works
 
-The `migrations/` directory (also at `src/migrations/`) contains one subdirectory per version:
+The `.tstack/migrations/` directory (also at `src/.tstack/migrations/`) contains one subdirectory per version:
 
 ```
-migrations/
+.tstack/migrations/
 ├── 0.2.0/
 │   └── migration.md    ← baseline (no-op)
-└── 0.3.0/
-    └── migration.md    ← changes from 0.2.0 → 0.3.0
+├── 0.3.0/
+│   └── migration.md    ← changes from 0.2.0 → 0.3.0
+└── 0.4.0/
+    └── migration.md    ← changes from 0.3.0 → 0.4.0
 ```
 
 Each `migration.md` is an **agent-readable** document describing:
@@ -60,7 +62,7 @@ Each `migration.md` is an **agent-readable** document describing:
 
 ### When to Create a Migration
 
-Create a new `migrations/<version>/migration.md` whenever a version bump introduces:
+Create a new `.tstack/migrations/<version>/migration.md` whenever a version bump introduces:
 - New files or directories consumers need
 - Renamed or moved files
 - Changed file formats or structures
@@ -112,7 +114,7 @@ The Orchestrator performs a pre-flight check before starting work (sub-agents in
 
 | Category | Files | Synced? | Safe to Overwrite? |
 |:---|:---|:---|:---|
-| **Framework** | Agent `.agent.md` files, `.tstack/.version`, `.tstack/README.md`, `.tstack/team.md`, `migrations/`, skills | Yes | Yes — updated each release |
+| **Framework** | Agent `.agent.md` files, `.tstack/.version`, `.tstack/README.md`, `.tstack/team.md`, `.tstack/migrations/`, skills | Yes | Yes — updated each release |
 | **State** | `.tstack/project.md`, `decisions.md`, `routing.md`, `sprint-index.md`, `.migrated`, `sprints/` | No | Never — agent/user data |
 | **User override** | `.tstack/team.local.md` | No | Never — user customization |
 | **Dogfood only** | `AGENTS.md`, `scripts/`, `.tstack/sprints/` (active work) | No | N/A — not distributed |

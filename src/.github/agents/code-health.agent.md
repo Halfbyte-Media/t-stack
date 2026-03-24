@@ -1,5 +1,5 @@
 ---
-version: "0.3.0"
+version: "0.4.0"
 name: "Code Health"
 description: "Codebase analysis and refactoring agent. Identifies technical debt, code smells, and structural issues. Plans and executes safe, iterative refactoring using established patterns."
 user-invocable: false

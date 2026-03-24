@@ -1,5 +1,5 @@
 ---
-version: "0.3.0"
+version: "0.4.0"
 name: "Orchestrator"
 description: "Primary coordinator for the T-Stack agent team. Routes tasks to specialized sub-agents, manages sprint lifecycle, synthesizes results, and ensures human oversight."
 user-invocable: true

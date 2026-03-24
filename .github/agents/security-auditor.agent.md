@@ -1,5 +1,5 @@
 ---
-version: "0.3.0"
+version: "0.4.0"
 name: "Security Auditor"
 description: "Security review agent. Scans code for vulnerabilities, enforces security invariants, reviews authentication/authorization logic, and flags OWASP Top 10 risks."
 user-invocable: false

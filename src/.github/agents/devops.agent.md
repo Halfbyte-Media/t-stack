@@ -1,5 +1,5 @@
 ---
-version: "0.3.0"
+version: "0.4.0"
 name: "DevOps"
 description: "DevOps and infrastructure agent. Manages build pipelines, deployment configurations, CI/CD workflows, Dockerfiles, and environment setup."
 user-invocable: false

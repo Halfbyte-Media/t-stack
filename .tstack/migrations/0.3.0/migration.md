@@ -9,7 +9,7 @@
 - Added pre-flight version sanity check section to all 10 agent instruction bodies
 - Created `/setup` skill at `.github/skills/setup/SKILL.md`
 - Created `/update` skill at `.github/skills/update/SKILL.md`
-- Created `migrations/` directory with `0.2.0` baseline and `0.3.0` entries
+- Created `.tstack/migrations/` directory with `0.2.0` baseline and `0.3.0` entries
 - Introduced `.tstack/.migrated` state file (created by `/setup`, bumped by `/update`)
 - Updated `.tstack/README.md` with `.migrated` documentation
 - Trimmed initialization responsibilities from Scout — Scout now only scans and builds project profile
@@ -26,8 +26,8 @@
    - Confirm `.github/skills/update/SKILL.md` exists and has `name: update` in frontmatter.
 
 3. **Verify migrations exist:**
-   - Confirm `migrations/0.2.0/migration.md` exists.
-   - Confirm `migrations/0.3.0/migration.md` exists (this file).
+   - Confirm `.tstack/migrations/0.2.0/migration.md` exists.
+   - Confirm `.tstack/migrations/0.3.0/migration.md` exists (this file).
 
 4. **Verify `.tstack/README.md`:** Confirm it documents the `.migrated` state file in the ownership table.
 
@@ -45,8 +45,8 @@
 - [ ] All 10 agent files have `version: "0.3.0"` in frontmatter
 - [ ] `.github/skills/setup/SKILL.md` exists
 - [ ] `.github/skills/update/SKILL.md` exists
-- [ ] `migrations/0.2.0/migration.md` exists
-- [ ] `migrations/0.3.0/migration.md` exists
+- [ ] `.tstack/migrations/0.2.0/migration.md` exists
+- [ ] `.tstack/migrations/0.3.0/migration.md` exists
 - [ ] Only `orchestrator.agent.md` contains a Pre-flight Check section
 - [ ] Scout agent frontmatter has `user-invocable: false` and no `argument-hint`
 

@@ -1,5 +1,5 @@
 ---
-version: "0.3.0"
+version: "0.4.0"
 name: "Developer"
 description: "Implementation agent. Writes, modifies, and refactors code based on specifications from the Architect. Operates within defined scope and follows project conventions."
 user-invocable: false

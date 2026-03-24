@@ -15,6 +15,7 @@ This directory is the shared memory substrate for the T-Stack agent team. Agents
 | `decisions.md` | Scribe agent | No — created on first decision | Architectural decision log (append-only) |
 | `routing.md` | Orchestrator | No — created on first sprint | Active task/sprint tracking |
 | `sprint-index.md` | GitOps agent | No — created on first archival | Lightweight index of completed sprints |
+| `migrations/` | Framework | Yes | Version migration scripts (one subdirectory per version) |
 | `sprints/SPRINT-*` | All agents | No | Per-sprint working directories (permanent — completed sprints contain `DONE.md`) |
 | `team.local.md` | User | No — optional override | Custom team config that survives updates |
 

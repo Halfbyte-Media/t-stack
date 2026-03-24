@@ -51,13 +51,13 @@ Continue to Step 4 regardless of warnings (validation is informational).
 
 ### Step 4: Determine Migration Path
 
-List all subdirectories in `migrations/`. Each subdirectory name is a version number.
+List all subdirectories in `.tstack/migrations/`. Each subdirectory name is a version number.
 
 1. Filter to versions that are **greater than** `.tstack/.migrated` AND **less than or equal to** `.tstack/.version`.
 2. Sort by semver ascending.
 
 Example: `.migrated` = `0.2.0`, `.version` = `0.4.0`
-→ Run: `migrations/0.3.0/migration.md`, then `migrations/0.4.0/migration.md`
+→ Run: `.tstack/migrations/0.3.0/migration.md`, then `.tstack/migrations/0.4.0/migration.md`
 
 **If no migration directories match:** Warn: "No migration files found for the version range `<migrated>` → `<version>`. The version bump may not require migration steps. Updating `.migrated` to match."
 
@@ -65,7 +65,7 @@ Example: `.migrated` = `0.2.0`, `.version` = `0.4.0`
 
 For each migration version (in ascending order):
 
-1. Read `migrations/<version>/migration.md`.
+1. Read `.tstack/migrations/<version>/migration.md`.
 2. Report: "Applying migration `<version>`..."
 3. Follow the **Steps** section — execute each numbered step.
 4. After completing steps, run through the **Validation** checklist. Report any failures.
