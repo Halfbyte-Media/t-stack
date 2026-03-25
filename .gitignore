@@ -8,4 +8,4 @@
 packages/cli/files/
 
 # Private markdown files
-**/*.md
+**/_*.md
