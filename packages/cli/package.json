@@ -1,0 +1,37 @@
+{
+  "name": "@tstack/cli",
+  "version": "0.6.0",
+  "description": "Install and update T-Stack — a multi-agent development team framework for VS Code Copilot",
+  "type": "module",
+  "bin": {
+    "tstack": "./bin/cli.mjs"
+  },
+  "files": [
+    "bin/",
+    "lib/",
+    "files/",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "prepublishOnly": "node -e \"const fs = require('fs'); if (!fs.existsSync('files/.tstack/.version')) { console.error('ERROR: files/ directory not populated. Publish via CI only.'); process.exit(1); }\""
+  },
+  "keywords": [
+    "tstack",
+    "vscode",
+    "copilot",
+    "agents",
+    "ai",
+    "multi-agent",
+    "development-team"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Halfbyte-Media/t-stack.git",
+    "directory": "packages/cli"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/Halfbyte-Media/t-stack"
+}

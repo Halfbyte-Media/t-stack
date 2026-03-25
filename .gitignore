@@ -4,5 +4,8 @@
 # T-Stack migration state (local per developer, created by /setup)
 .tstack/.migrated
 
+# CLI staging directory (populated at build/publish time)
+packages/cli/files/
+
 # Private markdown files
 **/*.md

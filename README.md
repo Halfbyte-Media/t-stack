@@ -16,39 +16,29 @@ You → Orchestrator → Architect → Developer + Tester → Security Auditor �
 
 ### 1. Install
 
-Copy the two directories into your project root:
+From your project root:
+
+```bash
+npx @tstack/cli init
+```
+
+This copies all T-Stack agent definitions and blackboard files into your project.
+
+<details>
+<summary>Manual install (without npm/Node.js)</summary>
+
+Download the latest release and copy the contents of `src/` into your project root:
 
 ```
 your-project/
 ├── .github/
 │   ├── agents/          ← agent definitions
-│   │   ├── orchestrator.agent.md
-│   │   ├── scout.agent.md
-│   │   ├── architect.agent.md
-│   │   ├── developer.agent.md
-│   │   ├── tester.agent.md
-│   │   ├── security-auditor.agent.md
-│   │   ├── code-health.agent.md
-│   │   ├── devops.agent.md
-│   │   ├── gitops.agent.md
-│   │   └── scribe.agent.md
 │   └── skills/          ← workflow skills
-│       ├── setup/
-│       │   └── SKILL.md
-│       └── update/
-│           └── SKILL.md
-├── .tstack/             ← shared blackboard (state created by agents)
-│   ├── .version
-│   ├── README.md
-│   ├── team.md
-│   ├── migrations/
-│   │   ├── 0.2.0/migration.md
-│   │   ├── 0.3.0/migration.md
-│   │   └── 0.4.0/migration.md
-│   └── sprints/
-│       └── README.md
+├── .tstack/             ← shared blackboard
 └── .gitignore           ← add: .tstack/worktrees/ and .tstack/.migrated
 ```
+
+</details>
 
 ### 2. Initialize
 
@@ -77,17 +67,22 @@ The Orchestrator will:
 
 ### Updating
 
-To update T-Stack to a new version:
+```bash
+npx @tstack/cli update
+```
+
+Then run `/update` in Copilot Chat to apply any migrations.
+
+<details>
+<summary>Manual update (without npm/Node.js)</summary>
 
 1. Download the new release.
 2. Copy the contents of `src/` into your project root, overwriting existing files.
 3. Run `/update` in Copilot Chat to apply any migrations.
 
-`/update` runs sequential migrations from your current version to the new one and bumps the `.migrated` tracker. Your state files (`project.md`, `decisions.md`, `routing.md`, `sprint-index.md`) are safe — they aren't in the distribution.
+</details>
 
-If you customized `.tstack/team.md`, move your changes to `.tstack/team.local.md` before updating — local overrides survive updates.
-
-> **Note:** Do not use mirror/sync-delete tools (`robocopy /MIR`, `rsync --delete`) to update. Use a normal file copy.
+Your state files (`project.md`, `decisions.md`, `routing.md`, `sprint-index.md`) are never overwritten — they aren't framework files.
 
 ### Version Tracking
 

@@ -8,7 +8,7 @@
 
 | Sprint ID | Goal | Status | Worktree | Session |
 |:---|:---|:---|:---|:---|
-| | | | | |
+| SPRINT-006 | npx CLI distribution package | in-review | main | active |
 
 > **Status values:** `intake` → `planning` → `approved` → `in-progress` → `in-review` → `complete`
 > Once a sprint reaches `complete`, the GitOps agent archives it and removes it from this file.

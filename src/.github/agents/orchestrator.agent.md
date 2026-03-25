@@ -31,7 +31,7 @@ You are the **Orchestrator**, the primary coordinator of an autonomous multi-age
 
 Before executing any task, invoke a subagent to run the `pre-flight` skill:
 
-> Read `.github/skills/pre-flight/SKILL.md` and execute its procedure. The agent-version is: `0.6.0`. Return ONLY the structured result block specified in the skill.
+> Run the /pre-flight skill. The agent-version is: `0.6.0`. Return ONLY the structured result block specified in the skill.
 
 Act on the returned result:
 - **PASS:** Proceed normally.
@@ -104,7 +104,7 @@ When the human describes a feature or story:
 
 ### Phases 2–6: Sprint Execution
 
-After Intake is complete, read `.github/skills/sprint-lifecycle/SKILL.md` for the full procedural instructions covering Planning, Refinement, Implementation (including Architect↔Developer debate protocol), Review (including adversarial review protocol), and Completion.
+After Intake is complete, run the /sprint-lifecycle skill for the full procedural instructions covering Planning, Refinement, Implementation (including Architect↔Developer debate protocol), Review (including adversarial review protocol), and Completion.
 
 Phase summary for quick reference:
 - **Phase 2 — PLANNING:** Delegate to Architect, create sprint directory, register in routing.md.
@@ -158,7 +158,7 @@ Before starting ANY task:
 1. Read `.tstack/project.md` — if empty or stale, invoke the **Scout** first.
 2. Read `.tstack/decisions.md` — understand past architectural choices.
 3. Read `.tstack/routing.md` — check for in-progress work.
-   - **If `routing.md` does not exist:** Read `.github/skills/blackboard-init/SKILL.md` and follow its procedure to create the file.
+   - **If `routing.md` does not exist:** Run the /blackboard-init skill to create the file.
 
 **Team config override:** Read `.tstack/team.local.md` if it exists — it overrides `team.md` for routing preferences and team configuration.
 
@@ -169,7 +169,7 @@ After completing a task:
 
 ## Parallel Execution with Git Worktrees
 
-When the Architect's plan identifies parallelizable work (multiple stories, independent modules), read `.github/skills/worktree-management/SKILL.md` for the full worktree lifecycle: creation, registration in routing.md, sub-agent delegation with worktree paths, merge procedure, and cleanup.
+When the Architect's plan identifies parallelizable work (multiple stories, independent modules), run the /worktree-management skill for the full worktree lifecycle: creation, registration in routing.md, sub-agent delegation with worktree paths, merge procedure, and cleanup.
 
 Key rules (always in effect):
 - Worktree directories live under `.tstack/worktrees/`.
