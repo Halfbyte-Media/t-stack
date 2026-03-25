@@ -14,7 +14,7 @@ export async function update(cwd, options) {
     if (!fs.existsSync(versionFile)) {
       console.error(
         'T-Stack is not installed in this directory.\n' +
-        'Run `npx @tstack/cli init` first.'
+        'Run `npx tstack-agents init` first.'
       );
       return 1;
     }
@@ -43,7 +43,7 @@ export async function update(cwd, options) {
       if (!fs.existsSync(src)) {
         console.error(
           `Missing payload file: ${relPath}\n` +
-          'This may indicate a corrupted package. Try: npx @tstack/cli@latest init'
+          'This may indicate a corrupted package. Try: npx tstack-agents@latest init'
         );
         return 1;
       }
