@@ -22,6 +22,7 @@ jobs:
           node-version: 22
           registry-url: https://registry.npmjs.org
 
+          
       - name: Validate version consistency
         run: |
           FRAMEWORK_VERSION=$(cat src/.tstack/.version | tr -d '[:space:]')
