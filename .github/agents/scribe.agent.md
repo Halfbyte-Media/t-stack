@@ -1,5 +1,4 @@
 ---
-version: "0.6.0"
 name: "Scribe"
 description: "Documentation and memory agent. Maintains the blackboard, logs architectural decisions, updates project docs, and ensures context persists across sessions."
 user-invocable: false

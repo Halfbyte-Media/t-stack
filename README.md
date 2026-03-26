@@ -4,12 +4,12 @@ A multi-agent development team framework for VS Code Copilot. Drop it into any p
 
 ## What It Does
 
-T-Stack gives you a team of 10 specialized agents that communicate through a shared blackboard and work in parallel using git worktrees. You talk to one agent — the Orchestrator — and it handles the rest.
+T-Stack gives you a team of 11 specialized agents that communicate through a shared blackboard and work in parallel using git worktrees. You talk to one agent — the Orchestrator — and it handles the rest.
 
 ```
-You → Orchestrator → Architect → Developer + Tester → Security Auditor → GitOps → Scribe
-                   ↘ Scout (research)         ↗ DevOps (CI/CD)
-                                              ↗ Code Health (refactoring)
+You → Orchestrator → Architect → Developer + Tester → Senior Engineer → Security Auditor → GitOps → Scribe
+                   ↘ Scout (research)              ↗ DevOps (CI/CD)
+                                                   ↗ Code Health (refactoring)
 ```
 
 ## Quick Start
@@ -98,6 +98,7 @@ Your state files (`project.md`, `decisions.md`, `routing.md`, `sprint-index.md`)
 | **Developer** | Implements code per the Architect's plan | Sub-agent | ✅ Yes |
 | **Tester** | Writes and runs tests, reports failures | Sub-agent | ✅ Tests |
 | **Security Auditor** | Reviews code for OWASP Top 10 vulnerabilities | Sub-agent | No |
+| **Senior Engineer** | Reviews code quality, patterns, and maintainability | Sub-agent | No |
 | **Code Health** | Analyzes technical debt, executes safe refactoring | Sub-agent | ✅ Refactoring |
 | **DevOps** | CI/CD pipelines, Docker, deployment configs | Sub-agent | ✅ Infra |
 | **GitOps** | Branch management, PRs, sprint archival, `gh` CLI | Sub-agent | No |

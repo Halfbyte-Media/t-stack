@@ -1,0 +1,11 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "type": "command",
+        "command": "node .tstack/scripts/pre-flight.mjs",
+        "continueOnFail": true
+      }
+    ]
+  }
+}

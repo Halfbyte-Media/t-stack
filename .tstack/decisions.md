@@ -158,3 +158,151 @@
 - Bootstrap scripts (curl|sh) — two scripts to maintain, security controversy.
 - GitHub template repo — only works for new projects, no update story.
 - VS Code extension — best UX ceiling but highest implementation cost, deferred to post-1.0.
+
+---
+
+### [ADR-015] Passive context via copilot-instructions.md
+**Date:** 2026-03-26
+**Status:** Accepted
+**Context:** Vercel research showed skills had 53% pass rate (agents failed to invoke 56% of the time) while AGENTS.md passive context achieved 100%. T-Stack agents similarly suffer from context drift in long conversations — forgetting workflow phases, debate limits, and human gates.
+**Decision:** Create `.github/copilot-instructions.md` with three sections: (1) compressed T-Stack process anchor (~1.4KB pipe-delimited), (2) universal engineering principles (8 bullets), (3) Scout-generated project index placeholder. Process anchor and principles are framework-shipped; project index is state.
+**Rationale:** `copilot-instructions.md` is VS Code Copilot's native passive injection mechanism — loaded into every interaction automatically. This eliminates the "decision to look" failure mode. Region markers enable framework updates without overwriting Scout-generated content.
+
+---
+
+### [ADR-016] Two-tier engineering principles distribution
+**Date:** 2026-03-26
+**Status:** Accepted
+**Context:** A "god prompt" of engineering principles (simplicity, SRP, DRY, TDD, least privilege, etc.) was available but would bloat context if applied monolithically.
+**Decision:** Tier 1 — universal principles in copilot-instructions.md (all agents, passive). Tier 2 — role-specific additions inline in 6 agent definitions (Developer, Senior Engineer, Code Health, Tester, Security Auditor, Architect). No duplication between tiers.
+**Rationale:** Universal principles (YAGNI, boring code) benefit all agents passively. Role-specific principles (AAA test pattern, least privilege scanning) belong where they're actionable. Inline additions in agent files are themselves passive context for that agent.
+
+---
+
+### [ADR-017] Deep-scan skill for comprehensive project analysis
+**Date:** 2026-03-26
+**Status:** Accepted
+**Context:** The existing Scout surface scan produces a project profile (~150 lines) answering "what is this project?" but lacks the depth agents need for implementation decisions — module graphs, API surfaces, security boundaries, test coverage maps.
+**Decision:** Create `/deep-scan` skill that generates (1) full topic-based docs in `.tstack/docs/` (7 files), (2) compressed pipe-delimited index (~8KB) written into copilot-instructions.md Project Index section, (3) scan metadata for staleness detection.
+**Rationale:** The deep-scan output format follows Vercel's two-tier approach: compressed index for passive context (always loaded), full docs for on-demand retrieval. Pipe-delimited format maximizes information density for agent consumption. Skill is invoked by Scout, not directly by users.
+
+---
+
+### [ADR-018] "Additive Debt" as first-class code smell category
+**Date:** 2026-03-26
+**Status:** Accepted
+**Context:** AI-assisted codebases exhibit a specific technical debt pattern: functions that grow by accretion (new logic appended at the bottom instead of integrated into the structure), single-site wrappers that add indirection without abstraction.
+**Decision:** Add "Additive Debt" as a new analysis category in the Code Health agent, alongside existing categories (God Objects, Cyclomatic Complexity, etc.).
+**Rationale:** This pattern is the #1 technical debt signature in AI-generated code and previously had no vocabulary in the Code Health agent's smell catalog. Naming it makes it detectable and actionable.
+
+---
+
+### [ADR-019] Version bump 0.6.0 → 0.7.0
+**Date:** 2026-03-26
+**Status:** Accepted
+**Context:** SPRINT-007 introduces new file (copilot-instructions.md), new skill (deep-scan), new directory (.tstack/docs/), and enhances 6 agent definitions.
+**Decision:** Minor version bump per semver policy — new capabilities, no breaking changes.
+**Rationale:** Aligns with AGENTS.md versioning policy: new agents, skills, blackboard files, or workflow changes = minor bump.
+
+---
+
+### [ADR-020] copilot-instructions.md is a hybrid file
+**Date:** 2026-03-26
+**Status:** Accepted
+**Context:** SPRINT-007 originally classified `copilot-instructions.md` as a framework file, included in sync scripts for bulk-copy distribution. Post-implementation review revealed this would destroy the Scout-generated Project Index (state data) on every framework update, since bulk-copy happens before migration scripts run.
+**Decision:** Reclassify `copilot-instructions.md` as "hybrid" — a file containing both framework regions (process anchor, engineering principles) and state regions (Project Index). It is NOT included in sync scripts or bulk-copy. `/setup` creates it from a template. `/update` migrations surgically update framework regions using HTML comment region markers while preserving state regions.
+**Rationale:** The file must be always-available (passive context), but its Project Index section is generated by Scout deep-scan and is unique to each project. Region markers (`<!-- #region ... -->` / `<!-- #endregion ... -->`) enable surgical updates without a custom diffing system. This prevents the "overwrite-then-migrate" failure mode where state data is lost before the migration script can preserve it.
+**Alternatives Considered:**
+- Keep as framework file with post-copy restore — rejected; bulk-copy destroys state before migration can preserve it.
+- Split into two files (framework + state) — rejected; VS Code only supports one `copilot-instructions.md` for passive injection.
+
+---
+
+### [ADR-021] Auto-generated version.json manifest replaces hand-maintained file list
+**Date:** 2026-03-26
+**Status:** Accepted (supersedes ADR-003 partial — agent frontmatter version field removed)
+**Context:** The manual file list in `manifest.mjs` required hand-updating whenever agents, skills, or framework files were added/renamed. Version bumps touched 15+ files (every agent frontmatter `version:` field), creating noisy git diffs.
+**Decision:** Replace the hand-maintained manifest array with an auto-generated `version.json` containing SHA-256 content hashes for every framework file. The generator (`scripts/generate-version.mjs`) discovers files by convention (extensions, directory patterns) instead of maintaining a file list. Agent frontmatter `version:` fields are removed entirely — hashes provide stronger integrity guarantees. `package.json` is the single version source of truth.
+**Rationale:** Convention-based discovery means adding a new agent or skill requires zero manifest maintenance. Content hashes detect any file modification, not just version mismatches. Version bumps now touch only `package.json` — the pre-commit hook regenerates everything else.
+**Alternatives Considered:**
+- Keep agent frontmatter versions for human readability — rejected; hashes are superior for integrity and the version string in version.json serves the human-readable need.
+
+---
+
+### [ADR-022] SessionStart hook replaces AI-invoked pre-flight skill
+**Date:** 2026-03-26
+**Status:** Accepted (supersedes ADR-006, ADR-008, ADR-013)
+**Context:** The pre-flight check was an AI skill invoked by the Orchestrator as a subagent. This was non-deterministic — the LLM could forget, misparse results, or skip the check entirely in long conversations. It also consumed tokens on every conversation start.
+**Decision:** Replace the AI-invoked pre-flight skill with a deterministic VS Code `SessionStart` hook (`scripts/pre-flight.mjs`). The hook runs automatically before any agent is invoked, reads `version.json` and `.migrated`, compares versions, and outputs structured JSON. Fail-open design (`continueOnFail: true`) ensures agent access is never blocked by hook failures.
+**Rationale:** Deterministic execution eliminates the "decision to invoke" failure mode. Zero token cost (runs as a Node script, not an LLM call). Structured JSON output is unambiguous. Fail-open prevents user lockout from hook bugs.
+**Alternatives Considered:**
+- Keep as AI skill with stronger prompting — rejected; no prompting can guarantee 100% invocation.
+- Fail-closed design — rejected; would block users if the hook script has a bug.
+
+---
+
+### [ADR-023] core.hooksPath for zero-dependency git hooks
+**Date:** 2026-03-26
+**Status:** Accepted
+**Context:** The pre-commit hook that runs `generate-version.mjs` needs a reliable, zero-dependency mechanism.
+**Decision:** Use `git config core.hooksPath scripts/hooks` to point git at committed hook scripts. One-time setup per clone, documented in AGENTS.md.
+**Rationale:** Zero external dependencies — works with any git installation. Hook scripts are committed to the repo and versioned. No npm package or binary to install.
+**Alternatives Considered:**
+- lefthook — rejected; adds a binary dependency.
+- husky — rejected; adds npm devDependency.
+
+---
+
+### [ADR-024] Hash-based smart update in CLI
+**Date:** 2026-03-26
+**Status:** Accepted
+**Context:** The CLI `update` command previously copied all framework files unconditionally.
+**Decision:** Hash on-disk files and compare to incoming version.json hashes. Skip files with matching hashes. Categorized dry-run output (skip/update/create with counts).
+**Rationale:** Users see exactly what will change before applying. Unchanged files aren't touched, reducing noise.
+
+---
+
+### [ADR-025] Version bump 0.7.0 → 0.8.0
+**Date:** 2026-03-26
+**Status:** Accepted
+**Context:** SPRINT-008 introduces structural changes (version.json manifest, SessionStart hook, pre-commit hook), removes agent frontmatter `version:` fields, deletes the pre-flight skill, and refactors CLI commands.
+**Decision:** Minor version bump per semver policy — new capabilities and behavioral changes, no breaking directory structure changes.
+
+---
+
+### [ADR-026] Node.js pre-commit hook replacing shell script
+**Date:** 2026-03-26
+**Status:** Accepted
+**Context:** The original pre-commit hook was a `#!/bin/sh` shell script without `set -e`. If `generate-version.mjs` failed, stale hashes would be committed (supply-chain risk). The team primarily uses PowerShell on Windows.
+**Decision:** Replace the shell script with a Node.js script using `#!/usr/bin/env node` shebang. Uses `child_process.execSync` for git operations. Aborts commit on generation failure via `process.exit(1)`.
+**Rationale:** Node.js ≥18 is already a hard prerequisite. The shebang works cross-platform (Git's bundled MSYS on Windows, native on Mac/Linux). Explicit try/catch error handling. Matches project conventions (ESM, node: builtins only). Shell syntax not needed.
+**Alternatives Considered:**
+- Add `set -e` to shell script — rejected; works but keeps team in a non-primary language.
+- PowerShell hook — rejected; git invokes hooks via its bundled sh, not the user's shell.
+
+---
+
+### [ADR-027] Remove execute tool from Security Auditor
+**Date:** 2026-03-26
+**Status:** Accepted
+**Context:** SPRINT-007 Phase 5 review found the Security Auditor had the `execute` tool in its YAML frontmatter despite being explicitly read-only ("You do NOT write implementation code — you analyze and report"). This violated least-privilege.
+**Decision:** Remove `execute` from the Security Auditor's tools list. Tools: vscode, read, search, web.
+**Rationale:** Aligns tool permissions with the agent's stated read-only charter. Eliminates prompt injection risk where a crafted file could trick the auditor into running commands.
+
+---
+
+### [ADR-028] Deep-scan sanitization constraint
+**Date:** 2026-03-26
+**Status:** Accepted
+**Context:** The deep-scan skill reads source files and writes compressed summaries into `copilot-instructions.md` (passive context). Without sanitization, raw source content could be injected into every agent's context.
+**Decision:** Add explicit constraint: "Never copy raw string content from source files into index entries. All index values must be agent-synthesized summaries. Validate pipe-delimited format before writing."
+**Rationale:** The PROJECT-INDEX is injected into every Copilot interaction. Agent-synthesized summaries prevent prompt injection from source files.
+
+---
+
+### [ADR-029] Standardize region marker naming
+**Date:** 2026-03-26
+**Status:** Accepted
+**Context:** copilot-instructions.md used `T-STACK:PROCESS-ANCHOR` for one region but just `PROJECT-INDEX` for the other. Inconsistent naming creates fragile regex matching for migration scripts.
+**Decision:** Rename to `T-STACK:PROJECT-INDEX` for consistency. All region markers now use the `T-STACK:` prefix.
+**Rationale:** Consistent naming convention makes region-matching reliable across migrations and skills.

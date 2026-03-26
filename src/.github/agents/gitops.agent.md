@@ -1,5 +1,4 @@
 ---
-version: "0.6.0"
 name: "GitOps"
 description: "Git operations and workspace housekeeping agent. Manages branches, worktrees, sprint archival, GitHub CLI operations, and keeps the .tstack/ directory lean."
 user-invocable: false
@@ -10,7 +9,10 @@ tools:
   - edit
   - search
   - execute
+  - github/*
 ---
+
+**For Git operations use the github mcp server if it is available, otherwise use the gh cli.**
 
 # GitOps — Git & Workspace Operations Agent
 

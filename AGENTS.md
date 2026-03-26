@@ -14,39 +14,27 @@ T-Stack follows [Semantic Versioning](https://semver.org/):
 
 ### Version Files
 
-Two files track the framework version — they **must always be in sync**:
+Three files track the framework version:
 
-- `.tstack/.version` — the dogfood/active copy
-- `src/.tstack/.version` — the distributable copy
+- `packages/cli/package.json` `"version"` field — the **single source of truth**
+- `.tstack/version.json` — auto-generated manifest with version + file hashes (derived from package.json by pre-commit hook)
+- `.tstack/.version` — plaintext convenience copy (also derived)
 
-Both contain a single line: the version string (e.g., `0.3.0`).
+The pre-commit hook (`scripts/generate-version.mjs`) regenerates `version.json` and `.version` from `package.json` on every commit. Manual edits to `.version` or `version.json` will be overwritten.
 
 ### When to Bump
 
 Bump the version as the **last step** of a sprint that introduces user-facing changes. If a sprint only modifies dogfood-specific files (like this `AGENTS.md`, `.tstack/routing.md`, or sprint plans), no version bump is needed.
 
-### Agent Frontmatter Ordering
+### Pre-commit Hook
 
-The `version` property must always be the **first** property in an agent's YAML frontmatter, above `name`. This ensures version is immediately visible when scanning agent files.
+A pre-commit hook auto-generates `version.json` and `.version` from `package.json` on every commit. Setup (one-time per clone):
 
-```yaml
----
-version: "0.3.0"
-name: "Agent Name"
-description: "..."
-...
----
+```bash
+git config core.hooksPath scripts/hooks
 ```
 
-### Orchestrator Pre-flight Version String
-
-The Orchestrator's Pre-flight Check section contains a hardcoded `agent-version` string passed to the `pre-flight` skill:
-
-```
-The agent-version is: `0.5.0`
-```
-
-This string **must be updated** alongside the agent frontmatter `version:` fields during every version bump. It is not auto-derived — missing this causes a false WARN from the pre-flight check.
+The hook script is at `scripts/generate-version.mjs`. It scans `src/` for framework files by convention, computes SHA-256 content hashes, and writes `src/.tstack/version.json`. No manual file list maintenance is needed — add a new agent or skill to `src/` and it's picked up automatically.
 
 ## Migration System
 
@@ -111,23 +99,26 @@ Required / Not required / Recommended
 | `.tstack/.version` | Framework | Yes | "What version is installed" — overwritten on update |
 | `.tstack/.migrated` | State | No | "What version has been set up/migrated to" — created by `/setup`, bumped by `/update` |
 
-### Sanity Check Convention
+### Pre-flight Check
 
-The Orchestrator performs a pre-flight check before starting work (sub-agents inherit this check via delegation):
+A deterministic pre-flight check runs automatically via VS Code's `SessionStart` hook (`.tstack/scripts/pre-flight.mjs`) before any agent is invoked:
 
-1. Read `.tstack/.version` and `.tstack/.migrated`
-2. `.migrated` missing → tell user to run `/setup`
-3. `.migrated` < `.version` → tell user to run `/update`
-4. Agent frontmatter `version:` ≠ `.tstack/.version` → warn about stale files
+1. Read `.tstack/version.json` and `.tstack/.migrated`
+2. `.migrated` missing → warn: run `/setup`
+3. `.migrated` < `.version` → warn: run `/update`
+4. Output: structured JSON with `continue: true` (fail-open) and advisory `systemMessage`
+
+The Orchestrator reads the hook output and acts on any warnings. Sub-agents inherit this guarantee via delegation — they are never invoked if the check fails.
 
 ## File Classification
 
 | Category | Files | Synced? | Safe to Overwrite? |
 |:---|:---|:---|:---|
-| **Framework** | Agent `.agent.md` files, `.tstack/.version`, `.tstack/README.md`, `.tstack/team.md`, `.tstack/migrations/`, skills | Yes | Yes — updated each release |
-| **State** | `.tstack/project.md`, `decisions.md`, `routing.md`, `sprint-index.md`, `.migrated`, `sprints/` | No | Never — agent/user data |
+| **Framework** | Agent `.agent.md` files, `.tstack/version.json`, `.tstack/.version`, `.tstack/README.md`, `.tstack/team.md`, `.tstack/migrations/`, skills, `.github/hooks/`, `.tstack/scripts/pre-flight.mjs` | Yes | Yes — updated each release |
+| **State** | `.tstack/project.md`, `decisions.md`, `routing.md`, `sprint-index.md`, `.migrated`, `sprints/`, `docs/` | No | Never — agent/user data |
+| **Hybrid** | `copilot-instructions.md` — process anchor + principles (framework) and Project Index (state) | Template in `src/` | Created by `/setup`. Framework regions updated by `/update` migrations. Project Index preserved across updates. |
 | **User override** | `.tstack/team.local.md` | No | Never — user customization |
-| **Dogfood only** | `AGENTS.md`, `scripts/`, `.tstack/sprints/` (active work) | No | N/A — not distributed |
+| **Dogfood only** | `AGENTS.md`, `scripts/generate-version.mjs`, `scripts/hooks/`, `.tstack/sprints/` (active work) | No | N/A — not distributed |
 
 See `.tstack/README.md` for the full ownership table.
 

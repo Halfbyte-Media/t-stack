@@ -16,6 +16,9 @@ $frameworkFiles = @(
     @{ Src = "src/.tstack/sprints/README.md"; Dst = ".tstack/sprints/README.md"; IsDir = $false }
     @{ Src = "src/.github/skills"; Dst = ".github/skills"; IsDir = $true }
     @{ Src = "src/.tstack/migrations"; Dst = ".tstack/migrations"; IsDir = $true }
+    @{ Src = "src/.tstack/version.json"; Dst = ".tstack/version.json"; IsDir = $false }
+    @{ Src = "src/.github/hooks"; Dst = ".github/hooks"; IsDir = $true }
+    @{ Src = "src/.tstack/scripts/pre-flight.mjs"; Dst = ".tstack/scripts/pre-flight.mjs"; IsDir = $false }
 )
 
 $root = Split-Path -Parent $PSScriptRoot

@@ -1,5 +1,4 @@
 ---
-version: "0.6.0"
 name: "Security Auditor"
 description: "Security review agent. Scans code for vulnerabilities, enforces security invariants, reviews authentication/authorization logic, and flags OWASP Top 10 risks."
 user-invocable: false
@@ -8,7 +7,6 @@ tools:
   - vscode
   - read
   - search
-  - execute
   - web
 ---
 
@@ -53,6 +51,9 @@ For every code review, systematically check:
 - [ ] API responses don't leak internal implementation details.
 - [ ] Error messages are generic — no stack traces in production responses.
 - [ ] Environment variables and secrets are not hardcoded.
+- [ ] Active scan for secret-shaped literals — high-entropy strings, base64 blobs, patterns matching API keys (`sk-`, `ghp_`, `AKIA`), and PEM/certificate blocks in source files.
+- [ ] Least privilege check — service accounts, API scopes, file system permissions, and database roles should have minimum necessary access. Flag overly broad permissions.
+- [ ] Type validation at input boundaries — external data (user input, API responses, file reads) must be validated/parsed before use in business logic. Flag raw casts or unvalidated type assertions.
 
 ### Configuration
 - [ ] CORS is configured restrictively, not `*` in production.

@@ -1,38 +1,31 @@
 /**
- * T-Stack file manifest — classifies payload files for init vs update behavior.
+ * T-Stack file manifest — reads from version.json payload.
  *
- * framework: Overwritten on both `init` and `update`
- * initOnly:  Created on `init`, skipped on `update`
+ * framework:       Files overwritten on both `init` and `update`
+ * initOnly:        Files created on `init`, skipped on `update`
+ * frameworkHashes: Map of framework file paths → SHA-256 hex hashes
+ * version:         Framework version string
  */
 
-export const framework = [
-  '.github/agents/architect.agent.md',
-  '.github/agents/code-health.agent.md',
-  '.github/agents/developer.agent.md',
-  '.github/agents/devops.agent.md',
-  '.github/agents/gitops.agent.md',
-  '.github/agents/orchestrator.agent.md',
-  '.github/agents/scout.agent.md',
-  '.github/agents/scribe.agent.md',
-  '.github/agents/security-auditor.agent.md',
-  '.github/agents/senior-engineer.agent.md',
-  '.github/agents/tester.agent.md',
-  '.github/skills/blackboard-init/SKILL.md',
-  '.github/skills/pre-flight/SKILL.md',
-  '.github/skills/setup/SKILL.md',
-  '.github/skills/sprint-lifecycle/SKILL.md',
-  '.github/skills/update/SKILL.md',
-  '.github/skills/worktree-management/SKILL.md',
-  '.tstack/.version',
-  '.tstack/README.md',
-  '.tstack/team.md',
-  '.tstack/migrations/0.2.0/migration.md',
-  '.tstack/migrations/0.3.0/migration.md',
-  '.tstack/migrations/0.4.0/migration.md',
-  '.tstack/migrations/0.5.0/migration.md',
-  '.tstack/migrations/0.6.0/migration.md',
-];
+import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 
-export const initOnly = [
-  '.tstack/sprints/README.md',
-];
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const versionJsonPath = path.join(__dirname, '..', 'files', '.tstack', 'version.json');
+
+let manifest;
+try {
+  manifest = JSON.parse(fs.readFileSync(versionJsonPath, 'utf8'));
+} catch {
+  console.error(
+    'Missing or corrupt version.json in CLI payload.\n' +
+    'This may indicate a corrupted package. Try: npx @tstack/cli@latest init'
+  );
+  process.exit(1);
+}
+
+export const framework = Object.keys(manifest.framework).sort();
+export const initOnly = Object.keys(manifest.initOnly || {}).sort();
+export const frameworkHashes = manifest.framework;
+export const version = manifest.version;

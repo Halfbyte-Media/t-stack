@@ -1,0 +1,6 @@
+last-scan: 2026-03-26T00:00:00Z
+commit: 00be5b4+uncommitted
+version: 0.7.0
+categories: module-map,api-surface,data-flows,error-handling,configuration,test-coverage,security,build-pipeline,cross-cutting,dependencies
+index-size: 4695
+docs-files: architecture.md,api-surface.md,conventions.md,testing.md,security.md,build-and-deploy.md,dependencies.md

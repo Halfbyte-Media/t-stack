@@ -1,0 +1,25 @@
+#!/usr/bin/env node
+
+import { execSync } from 'node:child_process';
+
+const FILES = [
+  'src/.tstack/version.json',
+  'src/.tstack/.version',
+];
+
+// Generate the manifest — abort commit on failure
+try {
+  execSync('node scripts/generate-version.mjs', { stdio: 'inherit' });
+} catch {
+  console.error('pre-commit: version manifest generation failed — aborting commit');
+  process.exit(1);
+}
+
+// Stage generated files if they changed
+for (const file of FILES) {
+  try {
+    execSync(`git diff --quiet ${file}`);
+  } catch {
+    execSync(`git add ${file}`);
+  }
+}
