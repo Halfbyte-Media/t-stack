@@ -1,5 +1,4 @@
 ---
-version: "0.6.0"
 name: "Developer"
 description: "Implementation agent. Writes, modifies, and refactors code based on specifications from the Architect. Operates within defined scope and follows project conventions."
 user-invocable: false
@@ -81,6 +80,10 @@ If you have concerns, **raise them** in your response before implementing:
 - Write idiomatic code for the target language and framework.
 - Do not add unnecessary comments, docstrings, or type annotations to code you didn't change.
 - Do not add defensive error handling for scenarios that cannot happen.
+- Functions under 40 lines, single responsibility. If a function does two things, split it.
+- Max 3 nesting levels. Flatten with guard clauses and early returns.
+- Refactor to integrate — reshape existing code to absorb the change, don't append at the bottom.
+- No wrapper functions for single-use cases. Call the thing directly.
 
 ### File Operations
 - Prefer editing existing files over creating new ones unless the plan specifies new files.

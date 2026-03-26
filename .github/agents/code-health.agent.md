@@ -1,5 +1,4 @@
 ---
-version: "0.6.0"
 name: "Code Health"
 description: "Codebase analysis and refactoring agent. Identifies technical debt, code smells, and structural issues. Plans and executes safe, iterative refactoring using established patterns."
 user-invocable: false
@@ -42,6 +41,7 @@ When asked to audit code health, systematically scan for the following:
 - Deeply nested `if`/`else`/`switch` chains (3+ levels deep).
 - Functions with more than 5 branching paths.
 - Long parameter lists (5+ params suggest the function does too much).
+- Functions exceeding 40 lines — SRP violation signal. Check if the function has multiple responsibilities that should be separated.
 - Flag: function name, file path, nesting depth, branch count.
 
 ### Tight Coupling
@@ -73,6 +73,11 @@ When asked to audit code health, systematically scan for the following:
 - Callback patterns where async/await is standard.
 - Legacy module systems (e.g., CommonJS in a modern ESM project).
 - Flag: pattern found, current best practice, migration effort.
+
+### Additive Debt
+- Functions that have grown by accretion — logic appended at the bottom rather than integrated into the function's structure. Look for sequential blocks that could be extracted.
+- Single-site wrapper functions — helpers that are called from exactly one place and add no abstraction, only indirection.
+- Flag: function name, file path, line count, number of call sites (for wrappers), suggested consolidation approach.
 
 ## Analysis Output Format
 

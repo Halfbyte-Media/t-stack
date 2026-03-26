@@ -1,6 +1,6 @@
 {
   "name": "@tstack/cli",
-  "version": "0.6.0",
+  "version": "0.8.0",
   "description": "Install and update T-Stack — a multi-agent development team framework for VS Code Copilot",
   "type": "module",
   "bin": {

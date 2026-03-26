@@ -1,4 +1,4 @@
-# tstack-agents
+# @tstack/cli
 
 Install and update [T-Stack](https://github.com/Halfbyte-Media/t-stack) — a multi-agent development team framework for VS Code Copilot.
 
@@ -7,7 +7,7 @@ Install and update [T-Stack](https://github.com/Halfbyte-Media/t-stack) — a mu
 ### Install T-Stack into your project
 
 ```bash
-npx tstack-agents init
+npx @tstack/cli init
 ```
 
 After install, open VS Code and run `/setup` in Copilot Chat to complete initialization.
@@ -15,7 +15,7 @@ After install, open VS Code and run `/setup` in Copilot Chat to complete initial
 ### Update T-Stack
 
 ```bash
-npx tstack-agents update
+npx @tstack/cli update
 ```
 
 After update, run `/update` in VS Code Copilot Chat to apply migrations.

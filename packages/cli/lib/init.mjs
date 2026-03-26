@@ -1,7 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { framework, initOnly } from './manifest.mjs';
+import { framework, initOnly, version } from './manifest.mjs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -75,7 +75,6 @@ export async function init(cwd, options) {
       }
     }
 
-    const version = fs.readFileSync(path.join(cwd, '.tstack', '.version'), 'utf8').trim();
     console.log(
       `T-Stack v${version} installed successfully!\n\n` +
       'Next step: Open VS Code and run /setup in Copilot Chat.'

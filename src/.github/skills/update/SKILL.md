@@ -38,14 +38,12 @@ Parse both version strings as semver (`Major.Minor.Patch`).
   - Report: "Migrating from `<migrated>` to `<version>`."
   - Continue to Step 3.
 
-### Step 3: Validate Agent Files
+### Step 3: Validate Version Manifest
 
-For each `.github/agents/*.agent.md` file, read **line 2** (the `version:` property is always the first frontmatter field):
+Read `.tstack/version.json`. Verify it contains valid JSON with `version`, `framework`, and `initOnly` keys.
 
-1. Verify line 2 contains a `version:` field.
-2. Compare against `.tstack/.version`.
-
-**If any agent's `version:` does not match `.tstack/.version`:** Warn: "Agent `<name>` has version `<agent_version>` but `.tstack/.version` is `<framework_version>`. Some agent files may not have been updated. This could cause issues — consider re-copying all agent files from the distribution."
+- **If `version.json` is missing or malformed:** Warn: "`.tstack/version.json` is missing or invalid. Framework files may not have been updated correctly. Consider re-running the update."
+- **If `version.json` `version` does not match `.tstack/.version`:** Warn: "Version mismatch — `version.json` says `<json_version>` but `.version` says `<file_version>`. Re-copy framework files."
 
 Continue to Step 4 regardless of warnings (validation is informational).
 
@@ -72,6 +70,17 @@ For each migration version (in ascending order):
 5. Check the **Scout Re-scan** field — note if a re-scan is recommended.
 
 If any migration step fails or validation check fails, report the failure and **stop**. Do not continue to the next migration. The user must resolve the issue before retrying.
+
+### Hybrid File Handling
+
+Some files (like `.github/copilot-instructions.md`) are classified as **hybrid** — they contain both framework-owned regions and state/user-owned regions. These files are NOT bulk-copied during updates. Instead, migrations handle them with region-aware updates:
+
+1. Read the existing file.
+2. Extract and preserve state regions (between `<!-- #region ... -->` and `<!-- #endregion ... -->` markers for state-owned sections).
+3. Write the updated framework content.
+4. Re-insert the preserved state regions.
+
+Migration files specify which regions to preserve. If a hybrid file doesn't exist, create it fresh from the template.
 
 ### Step 6: Update `.tstack/.migrated`
 

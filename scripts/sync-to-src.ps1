@@ -16,6 +16,9 @@ $frameworkFiles = @(
     @{ Src = ".tstack/sprints/README.md"; Dst = "src/.tstack/sprints/README.md"; IsDir = $false }
     @{ Src = ".github/skills"; Dst = "src/.github/skills"; IsDir = $true }
     @{ Src = ".tstack/migrations"; Dst = "src/.tstack/migrations"; IsDir = $true }
+    @{ Src = ".tstack/version.json"; Dst = "src/.tstack/version.json"; IsDir = $false }
+    @{ Src = ".github/hooks"; Dst = "src/.github/hooks"; IsDir = $true }
+    @{ Src = ".tstack/scripts/pre-flight.mjs"; Dst = "src/.tstack/scripts/pre-flight.mjs"; IsDir = $false }
 )
 
 # State files that must NEVER exist in src/.tstack/
