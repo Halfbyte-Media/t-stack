@@ -19,7 +19,7 @@ You → Orchestrator → Architect → Developer + Tester → Security Auditor �
 From your project root:
 
 ```bash
-npx tstack-agents init
+npx @tstack/cli init
 ```
 
 This copies all T-Stack agent definitions and blackboard files into your project.
@@ -68,7 +68,7 @@ The Orchestrator will:
 ### Updating
 
 ```bash
-npx tstack-agents update
+npx @tstack/cli update
 ```
 
 Then run `/update` in Copilot Chat to apply any migrations.
