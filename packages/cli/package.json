@@ -1,5 +1,5 @@
 {
-  "name": "tstack-agents",
+  "name": "@tstack/cli",
   "version": "0.6.0",
   "description": "Install and update T-Stack — a multi-agent development team framework for VS Code Copilot",
   "type": "module",
@@ -29,9 +29,9 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/Halfbyte-Media/t-stack.git",
+    "url": "https://github.com/joshfinnie/t-stack.git",
     "directory": "packages/cli"
   },
   "license": "MIT",
-  "homepage": "https://github.com/Halfbyte-Media/t-stack"
+  "homepage": "https://github.com/joshfinnie/t-stack"
 }

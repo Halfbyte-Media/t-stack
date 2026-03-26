@@ -37,7 +37,7 @@ export async function init(cwd, options) {
       if (!fs.existsSync(src)) {
         console.error(
           `Missing payload file: ${relPath}\n` +
-          'This may indicate a corrupted package. Try: npx tstack-agents@latest init'
+          'This may indicate a corrupted package. Try: npx @tstack/cli@latest init'
         );
         return 1;
       }
