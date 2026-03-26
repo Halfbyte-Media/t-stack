@@ -4,7 +4,7 @@
 
 T-Stack has no traditional REST/GraphQL API. Its "API surface" consists of CLI commands, agent invocation points, and skill interfaces.
 
-## CLI Commands (@tstack/cli)
+## CLI Commands (tstack-agents)
 
 Entry point: packages/cli/bin/cli.mjs
 

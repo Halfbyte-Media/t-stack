@@ -20,7 +20,7 @@ try {
 } catch {
   console.error(
     'Missing or corrupt version.json in CLI payload.\n' +
-    'This may indicate a corrupted package. Try: npx @tstack/cli@latest init'
+    'This may indicate a corrupted package. Try: npx tstack-agents@latest init'
   );
   process.exit(1);
 }

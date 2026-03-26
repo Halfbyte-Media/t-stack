@@ -35,7 +35,7 @@ try {
   const command = commands[0];
 
   if (flags.includes('--version')) {
-    console.log(`@tstack/cli v${getVersion()}`);
+    console.log(`tstack-agents v${getVersion()}`);
     process.exit(0);
   }
 
@@ -48,7 +48,7 @@ try {
 
   switch (command) {
     case 'version':
-      console.log(`@tstack/cli v${getVersion()}`);
+      console.log(`tstack-agents v${getVersion()}`);
       process.exit(0);
     case 'init':
       exitCode = await init(process.cwd(), { force: flags.includes('--force') });

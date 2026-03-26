@@ -81,8 +81,8 @@ No deprecated dependencies. The project maintains a zero-dependency philosophy. 
 
 ## npm Package Metadata
 
-- Name: @tstack/cli
+- Name: tstack-agents
 - Version: 0.6.0
 - License: MIT
 - Registry: https://registry.npmjs.org
-- Repository: github.com/joshfinnie/t-stack (packages/cli directory)
+- Repository: github.com/Halfbyte-Media/t-stack (packages/cli directory)

@@ -49,9 +49,9 @@ T-Stack has no traditional build step for the framework itself. The "build" proc
 
 T-Stack is deployed via two channels:
 
-### npm Package (@tstack/cli)
+### npm Package (tstack-agents)
 - Published to npm public registry
-- Invoked via `npx @tstack/cli init` or `npx @tstack/cli update`
+- Invoked via `npx tstack-agents init` or `npx tstack-agents update`
 - Package includes: `bin/`, `lib/`, `files/` (populated at CI time), `README.md`
 - Requires Node.js >= 18
 

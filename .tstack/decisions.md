@@ -144,10 +144,10 @@
 **Date:** 2026-03-25
 **Status:** Accepted
 **Context:** T-Stack was previously distributed by manually copying files from `src/` into target projects. As the framework grows and more users adopt it, this manual process is tedious and error-prone. Multiple distribution options were evaluated: npx CLI, GitHub CLI extension, degit, bootstrap scripts, GitHub template repo, and VS Code extension. See also ADR-001 (version tracking) and ADR-002 (setup/update as skills).
-**Decision:** Build `@tstack/cli` — an npx-installable CLI package with `init` and `update` commands. Zero runtime dependencies. Published to npm via GitHub Actions on release tags. A VS Code extension is planned as a future premium experience (post-1.0).
+**Decision:** Build `tstack-agents` — an npx-installable CLI package with `init` and `update` commands. Zero runtime dependencies. Published to npm via GitHub Actions on release tags. A VS Code extension is planned as a future premium experience (post-1.0).
 **Rationale:**
 - npx is cross-platform and near-universal among VS Code users (Node.js prerequisite)
-- Single memorable command (`npx @tstack/cli init`)
+- Single memorable command (`npx tstack-agents init`)
 - Full control over framework vs. state file distinction via a file manifest
 - npm handles distribution, versioning, and CDN
 - `npx tstack@latest` ensures users always get the latest version

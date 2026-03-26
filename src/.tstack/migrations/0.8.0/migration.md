@@ -21,7 +21,7 @@ Confirm these files were copied by the update:
 - `.github/hooks/pre-flight.json`
 - `.tstack/scripts/pre-flight.mjs`
 
-If any are missing, re-run `npx @tstack/cli@latest update`.
+If any are missing, re-run `npx tstack-agents@latest update`.
 
 ### Step 2: Remove stale pre-flight skill
 If `.github/skills/pre-flight/` directory still exists, delete it and its contents.

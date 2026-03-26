@@ -57,7 +57,7 @@ Mirror of framework files for distribution. Contains identical copies of agents,
 
 ### Zone 5: CLI Package (packages/cli/)
 
-npm package @tstack/cli (v0.6.0) providing npx @tstack/cli init and update. Pure Node.js (ESM), zero dependencies. Reads version.json manifest for file inventory and SHA-256 hashes.
+npm package tstack-agents (v0.6.0) providing npx tstack-agents init and update. Pure Node.js (ESM), zero dependencies. Reads version.json manifest for file inventory and SHA-256 hashes.
 
 ### Zone 6: Scripts (scripts/)
 
@@ -89,10 +89,10 @@ User Input -> Orchestrator -> Sub-agents (read/write blackboard)
 ## Data Flow
 
 ### 1. Installation Flow
-npx @tstack/cli init -> manifest.mjs reads version.json -> init.mjs copies framework+initOnly files -> configures .gitignore -> path traversal check on every destination
+npx tstack-agents init -> manifest.mjs reads version.json -> init.mjs copies framework+initOnly files -> configures .gitignore -> path traversal check on every destination
 
 ### 2. Update Flow
-npx @tstack/cli update -> manifest.mjs reads version.json -> update.mjs reads installed version -> hash comparison per file -> skip unchanged, copy changed/new -> report stats + migration instructions
+npx tstack-agents update -> manifest.mjs reads version.json -> update.mjs reads installed version -> hash comparison per file -> skip unchanged, copy changed/new -> report stats + migration instructions
 
 ### 3. Agent Workflow Data Flow
 Human request -> Orchestrator reads blackboard (project.md -> decisions.md -> routing.md) -> classifies complexity -> Architect produces plan -> Human approves -> Developer implements -> Senior Engineer reviews (Medium+) -> Security Auditor + Tester review in parallel -> GitOps merges -> Scribe logs decisions

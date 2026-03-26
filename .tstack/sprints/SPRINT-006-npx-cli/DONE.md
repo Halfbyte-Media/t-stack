@@ -4,7 +4,7 @@
 **Outcome:** Success
 
 ## Summary
-Built `@tstack/cli` — an npx-installable CLI package with `init` and `update` commands. Zero runtime dependencies. Published to npm via GitHub Actions on release tags.
+Built `tstack-agents` — an npx-installable CLI package with `init` and `update` commands. Zero runtime dependencies. Published to npm via GitHub Actions on release tags.
 
 ## Key Deliverables
 - `packages/cli/` — CLI package with `bin/cli.mjs`, `lib/init.mjs`, `lib/update.mjs`, `lib/manifest.mjs`
